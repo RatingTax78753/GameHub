@@ -1,7 +1,3 @@
-Aqui está o README atualizado, incluindo a área de instituição:
-
----
-
 # GameHub
 
 ## Descrição:
@@ -71,8 +67,16 @@ GameHub é uma plataforma de e-commerce de jogos inspirada em serviços como Ste
 - Integração com a API do Mercado Pago para realizar pagamentos de forma segura.
 
 ### 6. Perfil do Usuário:
-- Separado em 4 partes: Perfil, Lista de Desejos, Pedidos e Games.
-- 
+
+- **Dividido em 4 partes: Perfil, Lista de Desejos, Pedidos e Games.**
+  
+  - **Perfil:** Exibe as informações do usuário, com opções para editar ou excluir o perfil. Para maior segurança, é necessário inserir a senha do usuário ao excluir o perfil.
+  
+  - **Lista de Desejos:** Exibe os jogos que o usuário adicionou à sua lista de desejos, permitindo fácil acesso para futuras compras.
+
+  - **Pedidos:** Mostra o histórico de compras do usuário, incluindo detalhes como a data em que o pedido foi realizado, o método de pagamento utilizado, o preço total, o código de transação e os jogos que compõem cada pedido.
+  
+  - **Games:** Aqui ficam disponíveis os jogos que o usuário comprou, prontos para serem jogados, proporcionando acesso rápido aos conteúdos adquiridos.
 
 ### 7. Páginas de Edição:
 - Editar nome de usuário, email e outras informações de perfil.
