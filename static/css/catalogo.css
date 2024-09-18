@@ -1,0 +1,147 @@
+.secao {
+    padding: 3.9rem 0;
+
+    & .container {
+        justify-content: start;
+        align-items: center;
+        gap: 3.9rem;
+    
+        & .titulo {
+            justify-content: center;
+            align-items: center;
+            gap: 1.02rem;
+            padding: 3.12rem;
+    
+            & h1 {
+                font-size: 3.98rem;
+            }
+    
+            & span {
+                font-size: 3.32rem;
+            }
+        }
+    
+        & .conteudo {
+            justify-content: space-between;
+            min-width: 132.5rem;
+            position: relative;
+    
+            & .filtros {
+                position: sticky;
+                top: 8.2rem;
+                left: 0;
+                padding: 2.5rem;
+                gap: 0.82rem;
+                width: 24.5rem;
+                height: max-content;
+            
+                & .div-trigger-list {
+                    gap: 0.42rem;
+                    padding: 0.42rem 0;
+                    border-bottom: solid 0.2rem var(--cinza-escuro1);
+            
+                    &:last-of-type {
+                        border-bottom: none;
+                    }
+            
+                    & .filter-trigger {
+                        justify-content: space-between;
+                        align-items: center;
+                        border-top-right-radius: 0.5rem;
+                        border-top-left-radius: 0.5rem;
+                        cursor: pointer;
+            
+                        & img {
+                            border-radius: 50%;
+                            width: 2.5rem;
+                            height: 2.5rem;
+                            transition: var(--transition-l-01s);
+                            transform: translateY(1.5%) rotate(-90deg);
+                        }
+            
+                        &.ativo img{
+                            background-color: var(--cinza-escuro1);
+                            transform: translateY(3%) rotate(0deg);
+                        }
+                    }
+            
+                    & .filter-content {
+                        gap: 0.42rem;
+                        max-height: 0;
+                        overflow: hidden;
+                        padding: 0;
+                        font-weight: 700;
+                        transition: all 0.15s ease-out;
+            
+                        &.aberto {
+                            padding: 0.42rem 0;
+                        }
+            
+                        & .filter-option {
+                            & label,
+                            & input {
+                                cursor: pointer;
+            
+                                &:hover {
+                                    color: var(--azul);
+                                }
+                            }
+                        }
+            
+                        & .preco-input {
+                            width: 11.5rem;
+                            justify-content: space-between;
+                            align-items: center;
+                            gap: 0.42rem;
+            
+                            & input {
+                                font-size: 1.6rem;
+                                width: 8rem;
+                                border-radius: 0.25rem;
+                                border: 0;
+                                padding: 0.27rem 0.42rem;
+                        
+                                &::-webkit-outer-spin-button,
+                                &::-webkit-inner-spin-button {
+                                    -webkit-appearance: none;
+                                    margin: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            
+                & #resetFilter {
+                    width: 100%;
+                    background-color: var(--cinza-escuro2);
+            
+                    &:hover {
+                        background-color: var(--preto-escuro2);
+                    }
+                }
+            
+                & ::selection {
+                    background-color: transparent;
+                }
+            }
+    
+            & .div-produtos-ordenar {
+                & .grid {
+                    padding: 0.82rem 2rem 2rem 2rem;
+                }
+            }
+        }
+
+        & .vazio {
+            padding: 0;
+        }
+    }
+}
+
+
+
+
+
+
+
+

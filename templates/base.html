@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block titulo %}
+        {% endblock %}
+    </title>
+    <link rel="icon" type="imagex/png" href="{% static 'images/Logo.ico' %}" >
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+
+    {% block style %}
+    {% endblock %}
+</head>
+<body>
+    <header>
+        {% block header %}
+            {% include 'navbar.html' %}
+        {% endblock %}
+    </header>
+    
+    <main>
+        {% block main %}
+
+            {% block modal %}
+            {% endblock %}
+        {% endblock %}
+    </main>
+
+    {% block footer %}
+        <footer class="flex col">
+            <div class="flex secao-footer">
+                <ul class="flex col">
+                    <li>Redes Sociais:</li>
+                    {% for rede in redes_sociais_footer %}
+                        <a target="_blank" href="{{ rede.link }}"><li>{{ rede.nome }}</li></a>
+                    {% endfor %}
+                </ul>
+
+                <ul class="flex col">
+                    <li>Institucional:</li>
+                    <a target="_blank" href="{% url 'institucional:sobre' %}"><li>Sobre</li></a>
+                    <a target="_blank" href="{% url 'institucional:termos_uso' %}"><li>Termos de Uso</li></a>
+                    <a target="_blank" href="{% url 'institucional:politica_privacidade' %}"><li>Política de Privacidade</li></a>
+                </ul>
+
+                <ul class="flex col">
+                    <li>Ajuda:</li>
+                    <a target="_blank" href="{% url 'suporte:homepage' %}"><li>Suporte</li></a>
+                    <a target="_blank" href="mailto:support@gamehub.com"><li>Contato</li></a>
+                    <a target="_blank" href="mailto:support@report-gamehub.com"><li>Denunciar</li></a>
+                </ul>
+            </div>
+
+            <div class="flex secao-footer">
+                <div class="flex gamehub">
+                    <img src="{% static 'images/logo.svg' %}" alt="Logo GameHub">
+                    <span>GameHub</span>
+                </div>
+
+                <p>&copy; 2024</p>
+            </div>
+        </footer>
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

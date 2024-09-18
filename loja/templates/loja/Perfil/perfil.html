@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Perfil - {{ request.user.username }} &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao background-img flex" {% if cliente.bg_perfil %} style="--img-fundo: url('{{ cliente.bg_perfil.url }}')"{% endif %}>
+        <div class="container flex col">
+            {% include 'loja/Includ/navbar-perfil.html' %}
+
+            <div class="perfil flex">
+                <div class="foto-info-perfil flex">
+                    {% if cliente.foto_perfil %}
+                        <img id="fotoPerfil" src="{{ cliente.foto_perfil.url }}" alt="Foto de perfil de {{ cliente.usuario.username }}">
+                    {% else %}
+                        <img id="fotoPerfil" src="{% static 'images/perfil-default.jpg' %}" alt="Foto de perfil default">
+                    {% endif %}
+                    
+                    <div class="info-perfil flex col">
+                        <h1>{{ cliente.usuario.username }}</h1>
+
+                        <div class="email-telefone flex col">
+                            <p>{{ cliente.usuario.email }}</p>
+                            
+                            {% if cliente.telefone %}
+                                <p>{{ cliente.telefone }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="options-editar flex">
+                    <a class="editar-perfil" href="{% url 'loja:editar_perfil' request.user.username %}">
+                        <img src="{% static 'images/edit-perfil.svg' %}" alt="Simbolo de editar perfil">
+                    </a>
+
+                    <ul id="options">
+                        <li>
+                            <img id="imgOptions" src="{% static 'images/options.svg' %}" alt="Simbolo das opções">
+                        </li>
+
+                        <a id="activateModal" href="{% url 'loja:excluir_conta' request.user.username %}">
+                            <li class="excluir-conta">
+                                Excluir conta
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% block modal %}
+        <div id="confirmationModal" class="modal flex">
+            <div class="modal-content flex col">
+                <div class="textos flex col">
+                    <h2>
+                        Você realmente deseja <span>EXCLUIR</span> sua conta?
+                    </h2>
+
+                    <p>Essa ação é irreversível!</p>
+                </div>
+
+                <div class="botoes flex">
+                    <a href="{% url 'loja:excluir_conta' request.user.username %}" id="confirmButton" class="botao btn-excluir">Excluir</a>
+                    <button id="cancelButton" class="btn-cancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/modal.js' %}"></script>
+    <script src="{% static 'js/perfil.js' %}"></script>
+{% endblock %}

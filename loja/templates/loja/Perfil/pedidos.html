@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Pedidos - {{ request.user.username }} &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/pedidos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vazio.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao background-img flex" {% if cliente.bg_perfil %} style="--img-fundo: url('{{ cliente.bg_perfil.url }}')"{% endif %}>
+        <div class="container flex col">
+            {% include 'loja/Includ/navbar-perfil.html' %}
+            
+            {% if pedidos|length > 0 %}
+                <div class="pedidos flex col">
+                    {% for pedido in pedidos %}
+                        {% if pedido.codigo_transacao %}
+                            <div class="flex col pedido">
+                                <div class="info-pedido flex">
+                                    <div class="codigo-data flex col">
+                                        <p class="legenda">{{ pedido.data_finalizacao|date:"d/m/Y" }} às {{ pedido.data_finalizacao|date:"H:i" }}</p>
+                                        <p>{{ pedido.codigo_transacao }}</p>
+                                    </div>
+
+                                    <div class="pagamento flex col">
+                                        <p class="legenda">Pagamento:</p>
+                                        {% if pedido.preco_total > 0 %}
+                                            {% if pedido.finalizado %}
+                                                {% for pagamento in pedido.pagamento_pedido.all %}
+                                                    {% if pagamento.metodo %}
+                                                        <p>{{ pagamento.metodo }}</p>
+                                                    {% endif %}
+                                                {% empty %}
+                                                    <p class="legenda">----------------</p>
+                                                {% endfor %}
+
+                                            {% else %}
+                                                <p class="legenda">----------------</p>
+                                            {% endif %}
+                                        {% else %}
+                                            <p class="legenda">----------------</p>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="valor flex col">
+                                        <p class="legenda">Valor:</p>
+                                        {% if pedido.preco_final %}
+                                            <p>{{ pedido.preco_final }}</p>
+                                        {% elif pedido.preco_total > 0  %}
+                                            <p>{{ pedido.preco_total }}</p>
+                                        {% else %}
+                                            <p>Gratuito</p>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="flex col">
+                                        <p class="legenda">Status:</p>
+                                        {% if pedido.finalizado %}
+                                            <p class="status finalizado">Finalizado</p>
+                                        {% else %}
+                                            <p class="status pendente">Pendente</p>
+                                        {% endif %}
+                                    </div>
+
+                                    <img id="setaInfo" src="{% static 'images/seta-baixo.svg' %}" alt="Seta Info Preço" loading="lazy">
+                                </div>
+                                
+                                <div class="detalhes-pedido flex col">
+                                    <div class="legenda flex">
+                                        <p>Produto(s):</p>
+                                        <p>&#9432; Alguns valores podem ter mudado</p>
+                                    </div>
+
+                                    <div class="produtos flex col">
+                                        {% for item in pedido.itens_pedido.all %}
+                                            <div class="produto flex">
+                                                <p>{{ item.estoque_produto.produto.nome }}</p>
+
+                                                {% if item.estoque_produto.produto.preco > 0  %}
+                                                    <p>R$ {{ item.estoque_produto.produto.preco }}</p>
+                                                {% else %}
+                                                    <p>Gratuito</p>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <div class="vazio flex col">
+                    <h1>Você ainda não possui nenhum pedido!</h1>
+                    <a href="{% url 'loja:todos_produtos' %}">Veja nossos produtos</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/pedidos.js' %}"></script>
+{% endblock %}

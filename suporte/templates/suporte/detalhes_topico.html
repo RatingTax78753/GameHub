@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    FAQ Tópico: {{ topico.nome }} &#124; Suporte GameHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/suporte/detalhes_topico.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao flex">
+        <div class="container flex col">
+            <h1 id="topo">{{ topico.nome }}</h1>
+
+            <div class="flex col">
+                {% for conteudo in topico.conteudo_topico.all %}
+                    <div class="conteudo flex col">
+                        <h2>{{ conteudo.titulo }}</h2>
+
+                        <div class="flex col">
+                            {{ conteudo.conteudo|linebreaks }}
+                        </div>
+
+                        <a href="#topo">&#11205; Voltar ao topo</a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <a class="botao" href="mailto:support@gamehub.com">Entrar em Contato</a>
+        </div>
+    </section>
+{% endblock %}

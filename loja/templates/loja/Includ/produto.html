@@ -1,0 +1,70 @@
+{% load static %}
+
+<div {% if forloop.counter|divisibleby:4 %} class="produto ultima-col" {% else %} class="produto" {% endif %}>
+    <a class="link-img-produto" href="{% url 'loja:detalhes_produto' produto.slug %}">
+        <img class="img-produto" src="{{ produto.capa.url }}" alt="imagem do produto: {{ produto.nome }}" loading="lazy">
+        
+        <p style="--tipo-cor: {{ produto.tipo.codigo_cor }};" class="tipo-produto">{{ produto.tipo.nome }}</p>
+    
+        {% if request.user.is_authenticated %}
+            {% if produto in request.user.cliente.lista_desejos.all %}
+                <form action="{% url 'loja:remover_lista_desejos' produto.id %}" method="POST">
+                    {% csrf_token %}
+
+                    <button class="button-lista-desejos" type="submit">
+                        <img src="{% static 'images/FavFull.png' %}" alt="Icone remover lista de desejos" loading="lazy">
+                    </button>
+                </form>
+            {% else %}
+                <form action="{% url 'loja:adicionar_lista_desejos' produto.id %}" method="POST">
+                    {% csrf_token %}
+
+                    <button class="button-lista-desejos" type="submit">
+                        <img src="{% static 'images/Fav.png' %}" alt="Icone adicionar lista de desejos" loading="lazy">
+                    </button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </a>
+
+    <div class="div-img-info">
+        <img src="{% static 'images/seta-info.svg' %}" alt="Seta da info" loading="lazy">
+
+        <div class="info-produto flex col">
+            <div class="flex col">
+                <p class="titulo-info">
+                    {% if produto.nome.split|length > 6 %}
+                        {% for palavra in produto.nome.split|slice:":6" %}
+                            {{ palavra }}{% if forloop.counter == 6 %}...{% endif %}
+                        {% endfor %}
+
+                    {% else %}
+                        {% for palavra in produto.nome.split %}
+                            {{ palavra }}
+                        {% endfor %}
+                    {% endif %}
+                </p>
+
+                {% if catalogo %}
+                    <p class="desc">
+                        {% if produto.descricao.split|length > 40 %}
+                            {% for palavra in produto.descricao.split|slice:":40" %}
+                                {{ palavra }}{% if forloop.counter == 40 %}...{% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% for palavra in produto.descricao.split %}
+                                {{ palavra }}
+                            {% endfor %}
+                        {% endif %}
+                    </p>
+                {% endif %}
+            </div>
+
+            {% if produto.preco > 0 %}
+                <p class="preco flex">R$ {{ produto.preco }}</p>
+            {% else %}
+                <p class="preco flex">Gratuito</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

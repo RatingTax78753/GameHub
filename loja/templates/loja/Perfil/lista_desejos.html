@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Lista de desejos - {{ request.user.username }} &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/lista_desejos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vazio.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao background-img flex" {% if cliente.bg_perfil %} style="--img-fundo: url('{{ cliente.bg_perfil.url }}')"{% endif %}>
+        <div class="container flex col">
+            {% include 'loja/Includ/navbar-perfil.html' %}
+            
+            {% if lista_desejos|length > 0 %}
+                <div class="produtos flex col">
+                    {% for produto in lista_desejos %}
+                        <a class="produto flex"  href="{% url 'loja:detalhes_produto' produto.slug %}">
+                            <div class="flex form-img">
+                                <form action="{% url 'loja:remover_lista_desejos' produto.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button class="button-lista-desejos" type="submit">
+                                        <img src="{% static 'images/FavFull.png' %}" alt="Icone remover lista de desejos" loading="lazy">
+                                    </button>
+                                </form>
+
+                                <img class="capa" src="{{ produto.capa.url }}" alt="Capa de {{ produto.nome }}" loading="lazy">
+                            </div>
+
+                            <div class="info-form flex col">
+                                <div class="titulo-preco flex">
+                                    <p class="titulo">
+                                        {% if produto.nome.split|length > 6 %}
+                                            {% for palavra in produto.nome.split|slice:":6" %}
+                                                {{ palavra }}{% if forloop.counter == 6 %}...{% endif %}
+                                            {% endfor %}
+                                
+                                        {% else %}
+                                            {% for palavra in produto.nome.split %}
+                                                {{ palavra }}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </p>
+
+                                    {% if produto.preco > 0 %}
+                                        <p>R$ {{ produto.preco }}</p>
+                                    {% else %}
+                                        <p>Gratuito</p>
+                                    {% endif %}
+                                </div>
+                                
+                                {% if produto in itens_carrinho %}
+                                    <form class="flex" action="{% url 'loja:remover_carrinho' produto.id %}" method="POST">
+                                        {% csrf_token %}
+
+                                        <button class="button-carrinho remover flex" type="submit">
+                                            <img src="{% static 'images/remover-carrinho.svg' %}" alt="Icone remover carrinho" loading="lazy">
+                                            <p>Remover Carrinho</p>
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form class="flex" action="{% url 'loja:adicionar_carrinho' produto.id %}" method="POST">
+                                        {% csrf_token %}
+
+                                        <button class="button-carrinho adicionar flex" type="submit">
+                                            <img src="{% static 'images/add-carrinho.svg' %}" alt="Icone adicionar carrinho" loading="lazy">
+                                            <p>Adicionar Carrinho</p>
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <div class="vazio flex col">
+                    <h1>Você não possui nenhum item em sua lista de desejos!</h1>
+                    <a href="{% url 'loja:todos_produtos' %}">Veja nossos produtos</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/pedidos.js' %}"></script>
+{% endblock %}

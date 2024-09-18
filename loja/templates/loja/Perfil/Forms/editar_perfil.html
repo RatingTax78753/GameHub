@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Editar perfil - {{ request.user.username }} &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form_editar_perfil.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao background-img form flex col">
+        <div class="container flex col">
+            <h1>Editar perfil:</h1>
+
+            <div class="erro">
+                {% if erro == "username_indisponivel" %}
+                    <p>Nome de usuário indisponível</p>
+                {% elif erro == "email_indisponivel" %}
+                    <p>Email indisponível</p>
+                {% elif erro == "preenchimento" %}
+                    <p>Preencha os campos de email/username</p>
+                {% elif erro == "telefone_indisponivel" %}
+                    <p>Telefone indisponível</p>
+                {% endif %}
+            </div>
+
+            <form method="POST" class="flex col" enctype="multipart/form-data">
+                {% csrf_token %}
+            
+                <div class="perfil flex">
+                    <div class="foto-info-perfil flex">
+                        <div class="foto-perfil">
+                            {% if cliente.foto_perfil %}
+                                <img id="fotoPerfil" src="{{ cliente.foto_perfil.url }}" alt="Foto de perfil de {{ cliente.usuario.username }}">
+                            {% else %}
+                                <img id="fotoPerfil" src="{% static 'images/perfil-default.jpg' %}" alt="Foto de perfil default">
+                            {% endif %}
+            
+                            <div>
+                                <label id="divAlterarFotoPerfil" for="foto-perfil">
+                                    <p>Alterar Foto</p>
+                                </label>
+            
+                                <input id="foto-perfil" name="foto-perfil" type="file" accept="image/*" onchange="previewImage(event)">
+                            </div>
+                        </div>
+            
+                        <div class="info-perfil flex col">
+                            <div class="flex col">
+                                <label for="username">Username:</label>
+                                <input class="username" type="text" name="username" placeholder="Nome de Usuário" value="{{ request.user.username }}">
+                            </div>
+            
+                            <div class="email-telefone flex col">
+                                <div class="flex col">
+                                    <label for="email">Email:</label>
+                                    <input type="email" name="email" placeholder="Exemple@email.com" value="{{ request.user.email }}">
+                                </div>
+            
+                                <div class="flex col">
+                                    <label for="telefone">Telefone:</label>
+                                    <input type="text" name="telefone" placeholder="+99 (99) 99999-9999" {% if request.user.cliente.telefone %}value="{{ request.user.cliente.telefone }}"{% endif %}>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex col button-links">
+                    <button type="submit">Enviar</button>
+                    
+                    <div class="redirect-links flex">
+                        <p>Quer mudar sua senha?</p>
+                        <a href="{% url 'loja:mudar_senha' request.user.username %}">Clique aqui!</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/form_editar_perfil.js' %}"></script>
+    <script src="{% static 'js/perfil.js' %}"></script>
+{% endblock %}

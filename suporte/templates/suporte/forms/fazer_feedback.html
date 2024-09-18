@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Dar Feedback &#124; Suporte GameHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/suporte/form.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao">
+        <div class="container flex col">
+            <h1>Feedback:</h1>
+
+            {% if erro %}
+                <div class="erro">
+                    {% if erro == 'preenchimento' %}
+                        <span>Preencha todos os campos</span>
+                    {% elif erro == 'topico' %}
+                        <span>Defina uma nota para o seu feedback</span>
+                    {% endif %}
+                </div>
+            {% endif %}
+            
+            <form class="flex col" method="POST" action="">
+                {% csrf_token %}
+
+                <div class="campo notas flex">
+                    {% for nota in notas %}
+                        <div class="nota-feedback">
+                            <input type="radio" name="nota" id="nota{{ nota }}" value="{{ nota }}">
+
+                            <label for="nota{{ nota }}"></label>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="flex col">
+                    <label for="motivo">Motivo: (Opcional)</label>
+                    <textarea name="motivo" id="motivo" rows="10" placeholder="Escreva sua pergunta aqui..." ></textarea>
+                </div>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/suporte/feedback.js' %}" ></script>
+{% endblock %}

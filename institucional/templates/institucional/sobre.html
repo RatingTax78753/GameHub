@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Sobre &#124; GameHub Institucional
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/institucional/sobre.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao flex topo">
+        <div class="container center flex col">
+            <h1>Você está na GameHub</h1>
+            <p>Sua loja digital e plataforma gamer para PC e Consoles. Com a GameHub você vai descobrir, comprar e gerenciar os seus jogos.</p>
+        </div>
+
+        <a href="#sobre" class="link-sobre flex col">
+            <p>Sobre a GameHub</p>
+            <img src="{% static 'images/seta-baixo.svg' %}" alt="Seta para baixo">
+        </a>
+    </section>
+
+    <section id="sobre" class="secao flex">
+        <div class="container grid flex col">
+            <div class="flex grid-item">
+                <img src="{% static 'images/institucional/catalogo.svg' %}" alt="Icone Catálogo">
+
+                <div class="flex col">
+                    <h2>Grande catálogo</h2>
+                    <p>Contamos com milhares de jogos diretamente das maiores produtoras do mundo, incluindo lançamentos, pré-vendas e os títulos e franquias mais famosos e amados.</p>
+                </div>
+            </div>
+
+            <div class="flex grid-item">
+                <img src="{% static 'images/institucional/suporte.svg' %}" alt="Icone Suporte">
+
+                <div class="flex col">
+                    <h2>Suporte de verdade</h2>
+                    <p>No nosso suporte temos jogadores reais e apaixonados, fazendo de tudo para ajudá-lo em caso de problemas ou dúvidas. Seu contato é sempre tratado com carinho.</p>
+                </div>
+            </div>
+
+            <div class="flex grid-item">
+                <img src="{% static 'images/institucional/disponivel.svg' %}" alt="Icone Disponível">
+
+                <div class="flex col">
+                    <h2>Sempre disponível</h2>
+                    <p>Seu conteúdo sempre disponível. Acesse sua conta, encontre seus jogos, gerencie sua biblioteca e aproveite tudo que oferecemos, feito a mão só para você.</p>
+                </div>
+            </div>
+
+            <div class="flex grid-item">
+                <img src="{% static 'images/institucional/global.svg' %}" alt="Icone Global">
+
+                <div class="flex col">
+                    <h2>Global e local</h2>
+                    <p>Nosso objetivo é ser local, criando e oferecendo conteúdo e campanhas únicos, localização e preços especiais para cada região onde estivermos presentes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao flex nossa-missao background-img">
+        <div class="container center flex col">
+            <h2>Nossa missão</h2>
+            <h3>"Juntar todos os desenvolvedores, distribuidores e jogadores em uma só plataforma incrível de games."</h3>
+            <p>A gente quer facilitar a vida de produtoras e desenvolvedores para entrarem nos mercados locais de games, cobrando bem menos do que qualquer loja física. Somos a porta de entrada para quem cria games e quer mostrar pro mundo. Com a Nuuvem, devs de qualquer tamanho e de qualquer lugar podem divulgar e vender seus jogos para o nosso público.</p>
+        </div>
+    </section>
+
+    <section class="secao flex">
+        <div class="container flex col">
+            <div class="flex col como-funciona">
+                <h2>Como funciona?</h2>
+                
+                <div class="como-funciona-instrucoes flex">
+                    <div class="flex col">
+                        <img src="{% static 'images/institucional/carrinho.svg' %}" alt="Icone Carrinho">
+                        <p>Adicione os games ao carrinho.</p>
+                    </div>
+                    <div class="flex col">
+                        <img src="{% static 'images/institucional/cifrao.svg' %}" alt="Icone Cifrão">
+                        <p>Pague.</p>
+                    </div>
+                    <div class="flex col">
+                        <img id="conta" src="{% static 'images/institucional/conta.svg' %}" alt="Icone Conta">
+                        <p>Acesse seus jogos na sua conta.</p>
+                    </div>
+                    <div class="flex col">
+                        <img src="{% static 'images/Logo.svg' %}" alt="Icone Site">
+                        <p>Instale seu jogo e comece a jogar!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="como-funciona-textos flex col">
+                <p>Compre e reúna os melhores games em um único lugar, com praticidade, rapidez e sem gastar muito! Procure, descubra, tenha a seu alcance os títulos das maiores produtoras do mundo e os principais lançamentos indies.</p>
+                
+                <div class="flex">
+                    <div class="flex col">
+                        <h3>Ainda não tem a sua conta?</h3>
+                        <a href="{% url 'loja:criar_conta' %}">Cadastre-se Aqui!</a>
+                    </div>
+                    
+                    <div class="flex col">
+                        <h3>Tem dúvidas?</h3>
+                        <p>Você pode obter muito mais informações acessando: <a href="{% url 'suporte:homepage' %}">FAQ e Suporte</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

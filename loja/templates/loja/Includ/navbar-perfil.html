@@ -1,0 +1,12 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/navbar-perfil.css' %}">
+
+<div class="navbar-perfil flex">
+    <a id='linkPerfil' href="{% url 'loja:perfil' request.user.username %}">Perfil</a>
+    <a id='linkListaDesejos' href="{% url 'loja:lista_desejos' request.user.username %}">Lista de Desejos</a>
+    <a id='linkPedidos' href="{% url 'loja:pedidos' request.user.username %}">Pedidos</a>
+    <a id='linkGames' href="{% url 'loja:games' request.user.username %}">Games</a>
+</div>
+
+<script src="{% static 'js/navbar-perfil.js' %}"></script>

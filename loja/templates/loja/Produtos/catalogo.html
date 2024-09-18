@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    {% if pagina %}
+        {{ pagina }} - Catálogo &#124; GamesHub
+    {% else %}
+        Catálogo &#124; GamesHub
+    {% endif %}
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/catalogo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/produto.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom_select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vazio.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao flex col">
+        <div class="container flex col">
+            <div class="titulo flex">
+                {% if termo_pesquisa %}
+                    <h1>Você pesquisou por: <span>"{{ termo_pesquisa }}"</span></h1>
+                {% else %}
+                    <h1>Catálogo:</h1>
+                {% endif %}
+            </div>
+                    
+
+            {% if produtos.all|length > 0 %}
+                <div class="conteudo flex">
+                    <form method="GET" class="flex col filtros">
+                        <h2>Filtrar:</h2>
+
+                        <div class="div-trigger-list flex col">
+                            <div class="filter-trigger flex">
+                                <h3>Preço:</h3>
+                                <img id="setaInfo" src="{% static 'images/seta-baixo.svg' %}" alt="Seta Info Preço">
+                            </div>
+
+                            <div class="flex col filter-content div-inputs">
+                                <div class="flex preco-input">
+                                    <label for="preco_minimo">De:</label>
+                                    <input type="number" name="preco_minimo" id="preco_minimo" value={{ preco_minimo }}>
+                                </div>
+                                
+                                <div class="flex preco-input">
+                                    <label for="preco_maximo">Até:</label>
+                                    <input type="number" name="preco_maximo" id="preco_maximo" value={{ preco_maximo }}>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if filtro_tipos %}
+                            <div class="div-trigger-list flex col">
+                                <div class="filter-trigger flex">
+                                    <h3>Tipo:</h3>
+                                    <img id="setaInfo" src="{% static 'images/seta-baixo.svg' %}" alt="Seta Info Preço">
+                                </div>
+
+                                <div class="filter-content">
+                                    {% for tipo in filtro_tipos %}
+                                        <div class="filter-option">
+                                            <input type="checkbox" name="tipo" id="{{ tipo.slug }}" value="{{ tipo.slug }}">
+                                            <label for="{{ tipo.slug }}">{{ tipo.nome }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                
+                        {% if filtro_categorias %}
+                            <div class="div-trigger-list flex col">
+                                <div class="filter-trigger flex">
+                                    <h3>Categorias:</h3>
+                                    <img id="setaInfo" src="{% static 'images/seta-baixo.svg' %}" alt="Seta Info Preço">
+                                </div>
+
+                                <div class="filter-content">
+                                    {% for categoria in filtro_categorias %}
+                                        <div class="filter-option">
+                                            <input type="checkbox" name="categoria" id="{{ categoria.slug }}" value="{{ categoria.slug }}">
+                                            <label for="{{ categoria.slug }}">{{ categoria.nome }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if filtro_plataformas %}
+                            <div class="div-trigger-list flex col">
+                                <div class="filter-trigger flex">
+                                    <h3>Plataforma:</h3>
+                                    <img id="setaInfo" src="{% static 'images/seta-baixo.svg' %}" alt="Seta Info Preço">
+                                </div>
+
+                                <div class="filter-content">
+                                    {% for plataforma in filtro_plataformas %}
+                                        <div class="filter-option">
+                                            <input type="checkbox" name="plataforma" id="{{ plataforma.slug }}" value="{{ plataforma.slug }}">
+                                            <label for="{{ plataforma.slug }}">{{ plataforma.nome }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                
+                        {% if filtro_sistemas %}
+                            <div class="div-trigger-list flex col">
+                                <div class="filter-trigger flex">
+                                    <h3>Sistema:</h3>
+                                    <img id="setaInfo" src="{% static 'images/seta-baixo.svg' %}" alt="Seta Info Preço">
+                                </div>
+
+                                <div class="filter-content">
+                                    {% for sistema in filtro_sistemas %}
+                                        <div class="filter-option">
+                                            <input type="checkbox" name="sistema" id="{{ sistema.slug }}" value="{{ sistema.slug }}">
+                                            <label for="{{ sistema.slug }}">{{ sistema.nome }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if filtro_ativacoes %}
+                            <div class="div-trigger-list flex col">
+                                <div class="filter-trigger flex">
+                                    <h3>Ativação:</h3>
+                                    <img id="setaInfo" src="{% static 'images/seta-baixo.svg' %}" alt="Seta Info Preço">
+                                </div>
+
+                                <div class="filter-content">
+                                    {% for ativacao in filtro_ativacoes %}
+                                        <div class="filter-option">
+                                            <input type="checkbox" name="ativacao" id="{{ ativacao.slug }}" value="{{ ativacao.slug }}">
+                                            <label for="{{ ativacao.slug }}">{{ ativacao.nome }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <button id="resetFilter" type="reset">Limpar filtros</button>
+                        <button type="submit">Aplicar</button>
+                    </form>
+
+                    <div class="div-produtos-ordenar flex col">
+                        <div class="custom-select flex">
+                            <div class="display-custom-select flex">
+                                <p>Ordenar por:</p>
+        
+                                <div id="triggerOrdens" class="flex">
+                                    <p id="displaySelecionado"></p>
+                                    <img id="imgOrdemSelecionada"  src="{% static 'images/seta-baixo.svg' %}" alt="Seta dropdown">
+                                </div>
+                            </div>
+                        
+                            <div id="listOrdens" class="flex col">
+                                <a class="item-ordenar" name="adicionados-recentemente" href="#">Adicionados Recentemente</a>
+                                <a class="item-ordenar" name="mais-vendidos" href="#">Mais Vendidos</a>
+                                <a class="item-ordenar" name="lancamentos" href="#">Lançamentos</a>
+                                <a class="item-ordenar" name="maior-preco" href="#">Maior Preço</a>
+                                <a class="item-ordenar" name="menor-preco" href="#">Menor Preço</a>
+                            </div>
+                        </div>
+
+                        
+                        <div class="grid">
+                            {% for produto in produtos %}
+                                {% include 'loja/Includ/produto.html' %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="vazio flex col">     
+                    <h2>Nenhum produto foi encontrado! :&#40;</h2>
+                    <a href="{% url 'loja:todos_produtos' %}">Catálogo</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/catalogo.js' %}"></script>
+    <script src="{% static 'js/produto.js' %}"></script>
+    <script src="{% static 'js/custom_select.js' %}"></script>
+{% endblock %}

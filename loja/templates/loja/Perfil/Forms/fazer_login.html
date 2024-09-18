@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Login - {{ request.user.username }} &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao background-img form flex col">
+        <div class="container flex col">
+            <h1>Faça login para continuar:</h1>
+
+            <div class="erro">
+                {% if erro == "preenchimento" %}
+                    <p>Preencha todos os campos</p>
+                {% elif erro == "inexistente" %}
+                    <p>Usuário inexistente</p>
+                {% endif %}
+            </div>
+
+            <div class="form-links flex col">
+                <form class="flex col" action="{% url 'loja:fazer_login' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="flex col todos-campos">
+                        <div class="label-input flex col">
+                            <label for="campo">Nome de usuário / Email:</label>
+                            <input type="text" name="campo" id="campo" required>
+                        </div>
+
+                        <div class="label-input-legenda flex col">
+                            <label for="senha">Senha:</label>
+                            <input type="password" name="senha" id="senha" placeholder="Senha" required>
+                            <a href="{% url 'loja:password_reset'  %}">Esqueci minha senha!</a>
+                        </div>
+                    </div>
+
+                    <button type="submit">Login</button>
+                </form>
+
+                <div class="redirect-links flex">
+                    <p>Não possui uma conta?</p>
+                    <a href="{% url 'loja:criar_conta' %}">Crie uma aqui!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

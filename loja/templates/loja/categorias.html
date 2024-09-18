@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Categorias &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/categorias.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao">
+        <div class="container flex col">
+            <h1>Categorias:</h1>
+
+            <div class="grid-categorias flex col">
+                {% for grupo in grupos_categorias %}
+                    <div class="categorias flex">
+                        {% for categoria in grupo %}
+                            {% include 'loja/Includ/categoria.html' %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

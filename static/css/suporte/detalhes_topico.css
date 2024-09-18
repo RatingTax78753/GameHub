@@ -1,0 +1,36 @@
+.container {
+    gap: 2.5rem;
+
+    & #topo {
+        scroll-margin-top: 12.1rem;
+        margin: 0 auto;
+        font-size: 3.9rem;
+    }
+
+    & .conteudo {
+        width: 80rem;
+        gap: 1.6rem;
+        padding: 1.02rem;
+
+        &:not(:last-child) {
+            border-bottom: 0.2rem solid var(--cinza);
+        }
+    
+        & div {
+            gap: 0.82rem;
+        }
+
+        & a {
+            color: var(--azul);
+            width: fit-content;
+        
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    & .botao {
+        width: fit-content;
+    }
+}

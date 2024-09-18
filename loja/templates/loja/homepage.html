@@ -1,0 +1,449 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Homepage &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/produto.css' %}">
+    <link rel="stylesheet" href="{% static 'css/categorias.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao">
+        <div class="container flex col">
+            <div class="slider-buttons flex">
+                <div class="slider flex col">
+                    <div class="slides">
+                        <input type="radio" name="radio-btn-slider" id="radio1-slider">
+                        <input type="radio" name="radio-btn-slider" id="radio2-slider">
+                        <input type="radio" name="radio-btn-slider" id="radio3-slider">
+                        <input type="radio" name="radio-btn-slider" id="radio4-slider">
+
+
+                        {% for produto in produtos_slider %}
+                            <a href="{% url 'loja:detalhes_produto' produto.slug %}" {% if forloop.first %} class="slide first flex" {% else %} class="slide flex" {% endif %}>
+                                <div class="img-tipo">
+                                    <img src="{{ produto.capa.url }}" alt="Capa do jogo: {{ produto.nome }}" loading="lazy">
+                                    <p style="--cor-tipo: {{ produto.tipo.codigo_cor }}">{{ produto.tipo.nome }}</p>
+                                </div>
+
+                                
+                                <div class="info flex col">
+                                    <div class="flex col">
+                                        <h2>
+                                            {% if produto.nome.split|length > 6 %}
+                                                {% for palavra in produto.nome.split|slice:":6" %}
+                                                    {{ palavra }}{% if forloop.counter == 6 %}...{% endif %}
+                                                {% endfor %}
+            
+                                            {% else %}
+                                                {% for palavra in produto.nome.split %}
+                                                    {{ palavra }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </h2>
+
+                                        <div>
+                                            <h3>Categorias:</h3>
+                                            <p>
+                                                {% for categoria in produto.categorias.all %}
+                                                    {% if forloop.last %}
+                                                        {% if forloop.counter >= 16 %}
+                                                            ...
+                                                        {% else %}
+                                                            {{ categoria.nome }}
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {{ categoria.nome }} |
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <p class="preco">
+                                        {% if produto.preco > 0 %}
+                                            R$: {{ produto.preco }}
+                                        {% else %}
+                                            Gratuito
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </a>
+                        {% endfor %}
+
+                        <div class="navegation flex">
+                            <label for="radio1-slider" class="navegation-btn1-slider"></label>
+                            <label for="radio2-slider" class="navegation-btn2-slider"></label>
+                            <label for="radio3-slider" class="navegation-btn3-slider"></label>
+                            <label for="radio4-slider" class="navegation-btn4-slider"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="leftButtonSlider"  class="left-button"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta esquerda" loading="lazy"></button>
+                <button id="rightButtonSlider" class="right-button"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta direita" loading="lazy"></button>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="container flex col">
+            <h2>Mais Vendido:</h2>
+
+            <div class="carousel-buttons flex">
+                <div class="carousel produtos flex col">
+                    <div class="carousel-content flex">
+                        <input type="radio" name="radio-btn-carousel1" id="radio1-carousel1">
+                        <input type="radio" name="radio-btn-carousel1" id="radio2-carousel1">
+                        {% if produtos_mais_vendidos|length > 8 %}
+                            <input type="radio" name="radio-btn-carousel1" id="radio3-carousel1">
+                        {% endif %}
+        
+                        <div class="carousel-section flex first">
+                            {% for produto in produtos_mais_vendidos %}
+                                {% if forloop.counter < 5 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for produto in produtos_mais_vendidos %}
+                                {% if forloop.counter > 4 and forloop.counter < 9 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for produto in produtos_mais_vendidos %}
+                                {% if forloop.counter > 8 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        {% if produtos_mais_vendidos|length > 4 %}
+                            <div class="navegation carousel-navegation flex">
+                                <label for="radio1-carousel1" class="navegation-btn1-carousel1"></label>
+                                <label for="radio2-carousel1" class="navegation-btn2-carousel1"></label>
+                                {% if produtos_mais_vendidos|length > 8 %}
+                                    <label for="radio3-carousel1" class="navegation-btn3-carousel1"></label>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if produtos_mais_vendidos|length > 4 %}
+                    <button id="leftButtonCarousel1" class="left-button produtos"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta esquerda" loading="lazy"></button>
+                    <button id="rightButtonCarousel1" class="right-button produtos"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta direita" loading="lazy"></button>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="container flex col">
+            <h2>Adicionados Recentemente:</h2>
+
+            <div class="carousel-buttons flex">
+                <div class="carousel produtos flex col">
+                    <div class="carousel-content flex">
+                        <input type="radio" name="radio-btn-carousel2" id="radio1-carousel2">
+                        <input type="radio" name="radio-btn-carousel2" id="radio2-carousel2">
+                        {% if produtos_adicinados_recentemente|length > 8 %}
+                            <input type="radio" name="radio-btn-carousel2" id="radio3-carousel2">
+                        {% endif %}
+        
+                        <div class="carousel-section flex first">
+                            {% for produto in produtos_adicinados_recentemente %}
+                                {% if forloop.counter < 5 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for produto in produtos_adicinados_recentemente %}
+                                {% if forloop.counter > 4 and forloop.counter < 9 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for produto in produtos_adicinados_recentemente %}
+                                {% if forloop.counter > 8 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        {% if produtos_adicinados_recentemente|length > 4 %}
+                            <div class="navegation carousel-navegation flex">
+                                <label for="radio1-carousel2" class="navegation-btn1-carousel2"></label>
+                                <label for="radio2-carousel2" class="navegation-btn2-carousel2"></label>
+                                {% if produtos_adicinados_recentemente|length > 8 %}
+                                    <label for="radio3-carousel2" class="navegation-btn3-carousel2"></label>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            
+                {% if produtos_adicinados_recentemente|length > 4 %}
+                    <button id="leftButtonCarousel2" class="left-button produtos"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta esquerda" loading="lazy"></button>
+                    <button id="rightButtonCarousel2" class="right-button produtos"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta direita" loading="lazy"></button>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="container flex col">
+            <h2 class="itens">Categorias:</h2>
+
+            <div class="carousel-buttons flex">
+                
+            
+                <div class="carousel itens flex col">
+                    <div class="carousel-content flex">
+                        <input type="radio" name="radio-btn-carousel3" id="radio1-carousel3">
+                        <input type="radio" name="radio-btn-carousel3" id="radio2-carousel3">
+                        {% if categorias_carousel|length > 8 %}
+                            <input type="radio" name="radio-btn-carousel3" id="radio3-carousel3">
+                        {% endif %}
+        
+                        <div class="carousel-section flex first">
+                            {% for categoria in categorias_carousel %}
+                                {% if forloop.counter < 5 %}
+                                    {% include 'loja/Includ/categoria.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for categoria in categorias_carousel %}
+                                {% if forloop.counter > 4 and forloop.counter < 9 %}
+                                    {% include 'loja/Includ/categoria.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for categoria in categorias_carousel %}
+                                {% if forloop.counter > 8 %}
+                                    {% include 'loja/Includ/categoria.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        {% if categorias_carousel|length > 4 %}
+                            <div class="navegation carousel-navegation flex">
+                                <label for="radio1-carousel3" class="navegation-btn1-carousel3"></label>
+                                <label for="radio2-carousel3" class="navegation-btn2-carousel3"></label>
+                                {% if categorias_carousel|length > 8 %}
+                                    <label for="radio3-carousel3" class="navegation-btn3-carousel3"></label>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            
+                {% if categorias_carousel|length > 4 %}
+                    <button id="leftButtonCarousel3" class="left-button itens"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta esquerda" loading="lazy"></button>
+                    <button id="rightButtonCarousel3" class="right-button itens"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta direita" loading="lazy"></button>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="container flex col">
+            <h2>{{ desenvolvedora.nome }}:</h2>
+
+            <div class="carousel-buttons flex">
+                
+            
+                <div class="carousel produtos flex col">
+                    <div class="carousel-content flex">
+                        <input type="radio" name="radio-btn-carousel4" id="radio1-carousel4">
+                        <input type="radio" name="radio-btn-carousel4" id="radio2-carousel4">
+                        {% if produtos_desenvolvedora|length > 8 %}
+                            <input type="radio" name="radio-btn-carousel4" id="radio3-carousel4">
+                        {% endif %}
+        
+                        <div class="carousel-section flex first">
+                            {% for produto in produtos_desenvolvedora %}
+                                {% if forloop.counter < 5 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for produto in produtos_desenvolvedora %}
+                                {% if forloop.counter > 4 and forloop.counter < 9 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for produto in produtos_desenvolvedora %}
+                                {% if forloop.counter > 8 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        {% if produtos_desenvolvedora|length > 4 %}
+                            <div class="navegation carousel-navegation flex">
+                                <label for="radio1-carousel4" class="navegation-btn1-carousel4"></label>
+                                <label for="radio2-carousel4" class="navegation-btn2-carousel4"></label>
+                                {% if produtos_desenvolvedora|length > 8 %}
+                                    <label for="radio3-carousel4" class="navegation-btn3-carousel4"></label>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if produtos_desenvolvedora|length > 4 %}
+                    <button id="leftButtonCarousel4" class="left-button produtos"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta esquerda" loading="lazy"></button>
+                    <button id="rightButtonCarousel4" class="right-button produtos"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta direita" loading="lazy"></button>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="container flex col">
+            <h2>{{ categoria.nome }}:</h2>
+
+            <div class="carousel-buttons flex">
+                
+            
+                <div class="carousel produtos flex col">
+                    <div class="carousel-content flex">
+                        <input type="radio" name="radio-btn-carousel5" id="radio1-carousel5">
+                        <input type="radio" name="radio-btn-carousel5" id="radio2-carousel5">
+                        {% if produtos_categoria|length > 8 %}
+                            <input type="radio" name="radio-btn-carousel5" id="radio3-carousel5">
+                        {% endif %}
+        
+                        <div class="carousel-section flex first">
+                            {% for produto in produtos_categoria %}
+                                {% if forloop.counter < 5 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for produto in produtos_categoria %}
+                                {% if forloop.counter > 4 and forloop.counter < 9 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for produto in produtos_categoria %}
+                                {% if forloop.counter > 8 %}
+                                    {% include 'loja/Includ/produto.html' %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        {% if produtos_categoria|length > 4 %}
+                            <div class="navegation carousel-navegation flex">
+                                <label for="radio1-carousel5" class="navegation-btn1-carousel5"></label>
+                                <label for="radio2-carousel5" class="navegation-btn2-carousel5"></label>
+                                {% if produtos_categoria|length > 8 %}
+                                    <label for="radio3-carousel5" class="navegation-btn3-carousel5"></label>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            
+                {% if produtos_categoria|length > 4 %}
+                    <button id="leftButtonCarousel5" class="left-button produtos"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta esquerda" loading="lazy"></button>
+                    <button id="rightButtonCarousel5" class="right-button produtos"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta direita" loading="lazy"></button>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="container flex col">
+            <h2 class="itens">Plataformas:</h2>
+
+            <div class="carousel-buttons flex">
+                
+            
+                <div class="carousel itens flex col">
+                    <div class="carousel-content flex">
+                        <input type="radio" name="radio-btn-carousel6" id="radio1-carousel6">
+                        <input type="radio" name="radio-btn-carousel6" id="radio2-carousel6">
+                        {% if plataformas_carousel|length > 8 %}
+                            <input type="radio" name="radio-btn-carousel6" id="radio3-carousel6">
+                        {% endif %}
+        
+                        <div class="carousel-section flex first">
+                            {% for plataforma in plataformas_carousel %}
+                                {% if forloop.counter < 5 %}
+                                    <a class="plataforma" style="--fundo: url({{ plataforma.imagem.url }})" href="{% url 'loja:produtos_por_plataformas' plataforma.slug %}"></a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for plataforma in plataformas_carousel %}
+                                {% if forloop.counter > 4 and forloop.counter < 9 %}
+                                    <a class="plataforma" style="--fundo: url({{ plataforma.imagem.url }})" href="{% url 'loja:produtos_por_plataformas' plataforma.slug %}"></a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <div class="carousel-section flex">
+                            {% for plataforma in plataformas_carousel %}
+                                {% if forloop.counter > 8 %}
+                                    <a class="plataforma" style="--fundo: url({{ plataforma.imagem.url }})" href="{% url 'loja:produtos_por_plataformas' plataforma.slug %}"></a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        {% if plataformas_carousel|length > 4 %}
+                            <div class="navegation carousel-navegation flex">
+                                <label for="radio1-carousel6" class="navegation-btn1-carousel6"></label>
+                                <label for="radio2-carousel6" class="navegation-btn2-carousel6"></label>
+                                {% if plataformas_carousel|length > 8 %}
+                                    <label for="radio3-carousel6" class="navegation-btn3-carousel6"></label>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            
+                {% if plataformas_carousel|length > 4 %}
+                    <button id="leftButtonCarousel6" class="left-button itens"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta esquerda" loading="lazy"></button>
+                    <button id="rightButtonCarousel6" class="right-button itens"><img src="{% static 'images/seta-baixo.svg' %}" alt="Seta direita" loading="lazy"></button>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/homepage.js' %}"></script>
+    <script src="{% static 'js/produto.js' %}"></script>
+{% endblock %}

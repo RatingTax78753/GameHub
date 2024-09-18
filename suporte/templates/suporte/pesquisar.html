@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    {% if termo_pesquisa == "" %}
+        Todas as perguntas &#124; Suporte GameHub
+    {% else %}
+        Pesquisa: "{{ termo_pesquisa }}" &#124; Suporte GameHub
+    {% endif %}
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/suporte/pesquisar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom_select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vazio.css' %}">
+{% endblock %}
+
+{% block main %}
+    {% include 'suporte/component/form_pesquisa.html' %}
+
+    <section class="secao flex">
+        <div class="container flex col">
+            {% if termo_pesquisa == "" %}
+                <h1>Todas as perguntas:</h1>
+            {% else %}
+                <h1>Você pesquisou por: <span>"{{ termo_pesquisa }}"</span></h1>
+            {% endif %}
+
+            <div class="flex">
+                <div class="custom-select flex">
+                    <div class="display-custom-select flex">
+                        <p>Filtrar por tópico:</p>
+
+                        <div id="triggerFiltro" class="flex">
+                            <p id="filtroSelecionado"></p>
+                            <img id="imgFiltroSelecionada"  src="{% static 'images/seta-baixo.svg' %}" alt="Seta dropdown">
+                        </div>
+                    </div>
+                
+                    <div id="listFiltros" class="flex col">
+                        <a class="item-filtrar" name="nenhum" href="#">----------</a>
+                        {% for topico in topicos %}
+                            <a class="item-filtrar" name="{{ topico.slug }}" href="#">{{ topico.nome }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="custom-select flex">
+                    <div class="display-custom-select flex">
+                        <p>Ordenar por:</p>
+
+                        <div id="triggerOrdens" class="flex">
+                            <p id="displaySelecionado"></p>
+                            <img id="imgOrdemSelecionada"  src="{% static 'images/seta-baixo.svg' %}" alt="Seta dropdown">
+                        </div>
+                    </div>
+                
+                    <div id="listOrdens" class="flex col">
+                        <a class="item-ordenar" name="quantidade-respostas" href="#">Quantidade de Respostas</a>
+                        <a class="item-ordenar" name="adicionados-recentemente" href="#">Adicionadas Recentemente</a>
+                        <a class="item-ordenar" name="topicos" href="#">Tópicos</a>
+                    </div>
+                </div>
+            </div>
+
+            {% if resultados.all|length > 0 %}
+                <div class="perguntas flex col">
+                    {% for resultado in resultados %}
+                        <a class="pergunta flex col" href="{% url 'suporte:pergunta' resultado.id %}">
+                            <div class="info flex">
+                                <p>Postado em {{ resultado.data|date:"d/m/Y" }} às {{ resultado.data|date:"H:i" }}</p>
+                                <div class="autor flex">
+                                    <p>Por</p>
+                                    <img src="{{ resultado.autor.cliente.foto_perfil.url }}" alt="Foto do Usuário: {{ request.user.username }}">
+                                    <p>{{ resultado.autor.username }}</p>
+                                </div>
+                            </div>
+
+                            <div class="conteudo flex col">
+                                <h2 class="titulo-pergunta"><span class="topico">{{ resultado.topico }}</span>
+                                    {% if resultado.titulo.split|length > 20 %}
+                                        {% for palavra in resultado.titulo.split|slice:":20" %}
+                                            {{ palavra }}{% if forloop.counter == 20 %}...{% endif %}
+                                        {% endfor %}
+
+                                    {% else %}
+                                        {% for palavra in resultado.titulo.split %}
+                                            {{ palavra }}
+                                        {% endfor %}
+                                    {% endif %}
+                                </h2>
+                                <p>
+                                    {% if resultado.pergunta.split|length > 50 %}
+                                        {% for palavra in resultado.pergunta.split|slice:":50" %}
+                                            {{ palavra }}{% if forloop.counter == 50 %}...{% endif %}
+                                        {% endfor %}
+
+                                    {% else %}
+                                        {% for palavra in resultado.pergunta.split %}
+                                            {{ palavra }}
+                                        {% endfor %}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+
+                        {% if not forloop.last %}
+                            <div class="divisoria"></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <div class="vazio flex col">     
+                    <h2>Nenhum resultado encontrado!</h2>
+                    <a href="">Faça sua pergunta!</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/suporte/pesquisar.js' %}"></script>
+    <script src="{% static 'js/custom_select.js' %}"></script>
+{% endblock %}

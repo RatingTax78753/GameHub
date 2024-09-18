@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Mudar senha - {{ request.user.username }} &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao background-img form flex col">
+        <div class="container flex col">
+            <h1>Edite seu perfil:</h1>
+
+            <div class="erro">
+                {% if erro == "preenchimento" %}
+                    <p>Preencha todos os campos</p>
+                {% elif erro == "senha_incorreta" %}
+                    <p>Senha incorreta</p>
+                {% elif erro == "senhas_diferentes" %}
+                    <p>Senhas diferentes</p>
+                {% endif %}
+            </div>
+
+            <div class="form-links flex col">
+                <form class="flex col" action="" method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="todos-campos flex col">
+                        <div class="label-input flex col">
+                            <label for="senha_atual">Senha Atual:</label>
+                            <input type="password" name="senha_atual" placeholder="Senha Atual">
+                        </div>
+
+                        <div class="label-input flex col">
+                            <label for="senha_nova">Nova Senha:</label>
+                            <input type="password" name="senha_nova" placeholder="Nova Senha">
+                        </div>
+
+                        <div class="label-input flex col">
+                            <label for="confirmacao_senha_nova">Confirmação da nova senha:</label>
+                            <input type="password" name="confirmacao_senha_nova" placeholder="Confirmação da nova senha">
+                        </div>
+                    </div>
+
+                    <button type="submit">Mudar senha</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/perfil.js' %}"></script>
+{% endblock %}

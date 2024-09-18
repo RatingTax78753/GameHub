@@ -1,0 +1,41 @@
+.carousel-buttons {
+    position: relative;
+
+    & .carousel {
+        width: 101.84rem;
+        overflow: hidden;
+
+        & .carousel-content {
+            width: 400%;
+
+            & .carousel-section {
+                gap: 1.28rem;
+                transition: var(--transition-eo-1s);
+            }
+
+            & .carousel-navegation {
+                width: 101.84rem;
+            }
+        }
+
+        &.produtos {
+            height: 15rem;
+        }
+
+        &.itens {
+            height: 24rem;
+
+            & .carousel-section {
+                justify-content: center;
+                width: 101.84rem;
+                gap: 2.5rem;
+                transition: var(--transition-eo-1s);
+            }
+
+            & .categoria:hover {
+                transform: scale(1.0);
+            }
+        }
+    }
+}
+

@@ -1,0 +1,7 @@
+<a class="categoria" href="{% url 'loja:produtos_por_categoria' categoria.slug %}">
+    <img src="{{ categoria.imagem.url }}" alt="Imagem da categoria: {{ categoria.nome }}" loading="lazy">
+
+    <div class="label flex" style="--cor-categoria: {{ categoria.codigo_cor }}">
+        <p>{{ categoria.nome }}</p>
+    </div>
+</a>

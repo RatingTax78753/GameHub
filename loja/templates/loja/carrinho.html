@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Carrinho - {{ request.user.username }} &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/carrinho.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vazio.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao background-img flex col">
+        <div class="container flex col">
+            {% if itens_pedido %}
+            <h1>Seu carrinho:</h1>
+
+            <div class="pedido-preco flex">
+                <div class="esquerda flex col">
+                    <div class="itens flex col">
+                        {% for item in itens_pedido %}
+                            <a class="item flex" href="{% url 'loja:detalhes_produto' item.estoque_produto.produto.slug %}">
+                                <div class="img-info flex">
+                                    <img src="{{ item.estoque_produto.produto.capa.url }}" alt="Capa de {{ item.estoque_produto.produto.nome }}" loading="lazy">
+                                    
+                                    <div class="titulo-preco flex col">
+                                        
+                                        <h2>
+                                            {% if item.estoque_produto.produto.nome.split|length > 6 %}
+                                                {% for palavra in item.estoque_produto.produto.nome.split|slice:":6" %}
+                                                    {{ palavra }}{% if forloop.counter == 6 %}...{% endif %}
+                                                {% endfor %}
+                                                
+                                            {% else %}
+                                                {% for palavra in item.estoque_produto.produto.nome.split %}
+                                                    {{ palavra }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </h2>
+
+                                        {% if item.estoque_produto.produto.preco > 0 %}
+                                            <p class="preco">R$ {{ item.estoque_produto.produto.preco }}</p>
+                                        {% else %}
+                                            <p class="preco">Gratuito</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <form method="POST" action="{% url 'loja:remover_carrinho' item.estoque_produto.produto.id %}">
+                                    {% csrf_token %}
+
+                                    <button class="flex" type="submit">
+                                        <img src="{% static 'images/Lixo.svg' %}" alt="Símbolo de Lixeira" loading="lazy">
+                                    </button>
+                                </form>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="direita flex col">
+                    <div class="preco">
+                        <div id="total" class="total flex">
+                            <p>Total:</p>
+                            <div class="flex">
+                                <p>R$ {{ pedido.preco_total }}</p>
+                                <img id="setaInfo" src="{% static 'images/seta-baixo.svg' %}" alt="Seta Info Preço">
+                            </div>
+                        </div>
+
+                        <div id="infoPreco" class="info-preco flex col">
+                            <div class="comps-preco">
+                                {% for item in itens_pedido %}
+                                    <div class="comp-preco flex">
+                                        <p>R$</p>
+                                        <p>+ {{ item.estoque_produto.produto.preco }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <p class="total flex">Total: <span>R$ {{ pedido.preco_total }}</span></p>
+                        </div>
+                    </div>
+                    <a class="botao continuar-comprando flex" href="{% url 'loja:todos_produtos' %}">Continuar Comprando</a>
+                    
+                    <form method="POST" action="{% url 'loja:finalizar_compra' pedido.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ pedido.preco_total }}" name="total">
+                        <button class="botao" type="submit">Finalizar Pedido</button>
+                    </form>
+                </div>
+            </div>
+
+            {% else %}
+                <div class="vazio flex col">
+                    <h1>Você não possui nenhum item em seu carrinho!</h1>
+                    <a href="{% url 'loja:todos_produtos' %}">Veja nossos produtos</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/carrinho.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Excluir conta - {{ request.user.username }} &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao background-img form flex col">
+        <div class="container flex col">
+            <h1>Confirme sua senha para excluir sua conta:</h1>
+
+            <div class="erro">
+                {% if erro == "preenchimento" %}
+                    <p>Preencha o campo</p>
+                {% elif erro == "senha_incorreta" %}
+                    <p>Senha incorreta</p>
+                {% endif %}
+            </div>
+
+            <div class="form-links flex col">
+                <form class="flex col" action="" method="POST">
+                    {% csrf_token %}
+                    <div class="flex col todos-campos">
+                        <div class="label-input flex col">
+                            <label for="senha">Senha:</label>
+                            <input type="password" name="senha" id="senha" required>
+                        </div>
+                    </div>
+
+                    <button class="excluir" type="submit">Excluir</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

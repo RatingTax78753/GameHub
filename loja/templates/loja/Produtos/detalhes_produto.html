@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    {{ produto.nome }} &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/detalhes_produto.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao background-img" style="--background: url({{ produto.capa.url }})">
+        <div class="container flex col">
+            <div class="titulo-img flex">
+                <img src="{{ produto.capa.url }}" alt="Capa do jogo: {{ produto.nome }}">
+
+                <div class="titulo flex col">
+                    <h1>{{ produto.nome }}</h1>
+
+                    <ul class="flex">
+                        {% for sistema in produto.sistemas.all %}
+                            <a href="{% url 'loja:produtos_por_sistema' sistema.plataforma.slug sistema.slug %}">
+                                <li>{{ sistema }}</li>
+                            </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="conteudo flex">
+                <div class="esquerda flex col">
+                    <iframe src="{{ produto.trailer }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                    <div class="desc flex col">
+                        <h2>Descrição:</h2>
+                        <div class="flex col">{{ produto.descricao|linebreaks }}</div>
+                    </div>
+                </div>
+
+                <div class="direita flex col">
+                    <div class="topo-meio flex col">
+                        <div class="topo flex col">
+                            {% if produto.preco == 0 %}
+                                <p class="preco">Gratuito</p>
+                            {% else %}
+                                <p class="preco">R$: {{ produto.preco }}</p>
+                            {% endif %}
+
+                            <div class="ativacao-botoes flex col">
+                                <div class="flex">
+                                    <p>Ativação:</p>
+                                    <p>{{ produto.ativacao.nome }}</p>
+                                </div>
+
+                                <div class="botoes flex col">
+                                    {% if produto.estoque_produto.quantidade > 0 %}
+                                        {% if produto in itens_carrinho %}
+                                            <form class="flex" action="{% url 'loja:remover_carrinho' produto.id %}" method="POST">
+                                                {% csrf_token %}
+
+                                                <button class="button-carrinho remover flex" type="submit">
+                                                    <img src="{% static 'images/remover-carrinho.svg' %}" alt="Icone remover carrinho">
+                                                    <p>Remover Carrinho</p>
+                                                </button>
+                                            </form>
+                                        {% else %}
+                                            <form class="flex" action="{% url 'loja:adicionar_carrinho' produto.id %}" method="POST">
+                                                {% csrf_token %}
+
+                                                <button class="button-carrinho adicionar flex" type="submit">
+                                                    <img src="{% static 'images/add-carrinho.svg' %}" alt="Icone adicionar carrinho">
+                                                    <p>Adicionar Carrinho</p>
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    {% else %}
+                                        <p class="sem-estoque flex">Fora de estoque :&#40;</p>
+                                    {% endif %}
+                                    
+                                    {% if produto in request.user.cliente.lista_desejos.all %}
+                                        <form action="{% url 'loja:remover_lista_desejos' produto.id %}" method="POST">
+                                            {% csrf_token %}
+
+                                            <button class="button-lista-desejos flex" type="submit">
+                                                <img src="{% static 'images/FavFull.png' %}" alt="Icone remover lista de desejos">
+                                                <p>Remover da lista de desejos</p>
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <form action="{% url 'loja:adicionar_lista_desejos' produto.id %}" method="POST">
+                                            {% csrf_token %}
+
+                                            <button class="button-lista-desejos flex" type="submit">
+                                                <img src="{% static 'images/Fav.png' %}" alt="Icone adicionar lista de desejos">
+                                                <p>Adicionar da lista de desejos</p>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="meio flex col">
+                            <div class="infos flex col">
+                                <div class="flex">
+                                    <p>Data de lançamento:</p>
+                                    <p>{{ produto.lancamento|date:"d/m/Y" }}</p>
+                                </div>
+
+                                <div class="flex">
+                                    <p>Desenvolvedora:</p>
+                                    <p>{{ produto.desenvolvedora.nome }}</p>
+                                </div>
+
+                                <div class="flex">
+                                    <p>Distribuidora:</p>
+                                    <p>{{ produto.distribuidora.nome }}</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p>Categoria(s):</p>
+                            
+                                {% for categoria in produto.categorias.all %}
+                                    {% if forloop.last %}
+                                        <a href="{% url 'loja:produtos_por_categoria' categoria.slug %}">{{ categoria }}</a>
+                                    {% else %}
+                                        <a href="{% url 'loja:produtos_por_categoria' categoria.slug %}">{{ categoria }}</a> |
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+
+                            <div>
+                                <p>Modo de jogo:</p>
+
+                                <div class="modos-jogo">
+                                    {% for gameplay in produto.gameplay.all %}
+                                        {% if forloop.last %}
+                                            <p>{{ gameplay }}</p>
+                                        {% else %}
+                                            <p>{{ gameplay }}</p> |
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="classificacao flex">
+                        {% if produto.classificacao == "Livre" %}
+                            <img src="{% static 'images/classificacoes/Livre.png' %}" alt="Classificação Livre">
+                            <p>Este produto é recomendado para todos os públicos</p>
+                        {% else %}
+                            {% if produto.classificacao == "10 Anos" %}
+                                <img src="{% static 'images/classificacoes/10_anos.png' %}" alt="Classificação 10 Anos">
+                            {% elif produto.classificacao == "12 Anos" %}
+                                <img src="{% static 'images/classificacoes/12_anos.png' %}" alt="Classificação 12 Anos">
+                            {% elif produto.classificacao == "14 Anos" %}
+                                <img src="{% static 'images/classificacoes/14_anos.png' %}" alt="Classificação 14 Anos">
+                            {% elif produto.classificacao == "16 Anos" %}
+                                <img src="{% static 'images/classificacoes/16_anos.png' %}" alt="Classificação 16 Anos">
+                            {% else %}
+                                <img src="{% static 'images/classificacoes/18_anos.png' %}" alt="Classificação 18 Anos">
+                            {% endif %}
+                            
+                            <p>Este produto não é recomendado para menores de {{ produto.classificacao }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

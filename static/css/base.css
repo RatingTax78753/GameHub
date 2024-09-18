@@ -1,0 +1,225 @@
+:root {
+    /* Cores */
+    --preto: #232323;
+    --preto-escuro: #1A1A1A;
+    --preto-escuro2: #0E0E0E;
+
+    --cinza-claro1: #E4E4E4;   
+    --cinza-claro2: #BBBBBB;
+    --cinza: #707070;
+    --cinza-escuro1: #474747;
+    --cinza-escuro2: #353535;
+
+    --branco: #F2F2F2;
+
+    --azul: #0094FF;
+    --azul-escuro: #0077CC;
+    --azul-escuro2:#005ea1;
+
+    --verde: #1FA215;
+    --verde-escuro: #146D0E;
+    
+    --vermelho: #E60707;
+    --vermelho-escuro: #B20606;
+
+    --laranja: #E77518;
+
+    
+    /* Box Shadows */
+    --box-shadow: 0 0 0.8rem 0.1rem rgba(10, 10, 10, 0.5);
+    --box-shadow-header-footer: 0.5rem 0 0.4rem 0.1rem rgba(10, 10, 10, 0.5);
+    --box-shadow-p: 0 0 0.3rem 0.1rem rgba(10, 10, 10, 0.5);
+
+    /* Transitions */
+    --transition-l-01s: all 0.1s linear;
+    --transition-l-02s: all 0.2s linear;
+    --transition-eo-1s: all 1s ease-out;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body { 
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.4;
+    color: var(--branco);
+    background-color: var(--preto);
+    text-wrap: pretty;
+    position: relative;
+}
+
+h1 {
+    font-size: 3.32rem;
+    line-height: 1;
+}
+
+h2 {
+    font-size: 2.76rem;
+    line-height: 1.1;
+}
+
+h3 {
+    font-size: 2.3rem;
+    line-height: 1.2;
+}
+
+h4 {
+    font-size: 1.92rem;
+    line-height: 1.3;
+}
+
+ul {
+    list-style: none;
+}
+
+p, a, li {
+    line-height: 1.4;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-l-01s);
+}
+
+button,
+.botao {
+    font-size: inherit;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    color: var(--branco);
+    background-color: var(--azul-escuro) ;
+    border-radius: 0.5rem;
+    border: 0;
+    padding: 1.02rem 1.28rem;
+    cursor: pointer;
+    transition: background-color 0.1s linear;
+
+    &:hover {
+        background-color: var(--azul);
+    }
+}
+
+.flex {
+    display: flex;
+
+    &.col{
+        flex-flow: column;
+    }
+}
+
+.grid {
+    display: grid;
+    padding: 2rem;
+    grid-template-columns: repeat(4, 24.5rem);
+    grid-auto-rows: 13.8rem;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.secao {
+    padding: 3.9rem 4.88rem;
+    gap: 2rem;
+
+    &.background-img {
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        &.form {
+            background-color: rgba(0, 0, 0, 0.35);
+            background-blend-mode: overlay;
+            background-image: url("../images/BG1320.jpg");
+        }
+    }
+}
+
+.container {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+/* Header */
+header {
+    z-index: 9999;
+    position: sticky;
+    top: 0;
+    box-shadow: var(--box-shadow-header-footer);
+}
+
+footer {
+    padding: 2.5rem 3.9rem;
+    background-color: var(--preto-escuro);
+    box-shadow: var(--box-shadow-header-footer);
+    font-weight: 700;
+    font-size: 1.92rem;
+
+    & .secao-footer {
+        min-width: 100rem;
+        gap: 2.5rem;
+        justify-content: space-between;
+        margin: 0 auto;
+        padding: 1.28rem 0;
+
+        &:not(:last-child) {
+            border-bottom: 0.2rem solid var(--cinza-escuro2);
+            padding-bottom: 2.5rem;
+        }
+
+        & p {
+            font-size: 1.6rem;
+        }
+
+        & .gamehub {
+            font-size: 2.3rem;
+            gap: 0.52rem;
+            align-items: center;
+
+            & img {
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+
+        & ul {
+            gap: 0.52rem;
+
+            & a {
+                transition: var(--transition-l-01s);
+                width: fit-content;
+                font-size: 1.6rem;
+                gap: 0.42rem;
+    
+                &:hover {
+                    color: var(--azul);
+                }
+            }
+        }
+    }
+}
+
+main {
+    min-height: 45.31rem;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    background-color: var(--preto-escuro);
+    width: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--azul);
+    border-radius: 1rem;
+}

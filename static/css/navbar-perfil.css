@@ -1,0 +1,39 @@
+.container {
+    gap: 1.6rem;
+}
+
+.navbar-perfil {
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.02rem;
+
+    & a:link,
+    & a:visited {
+        transition: var(--transition-l-01s);
+        &:hover,
+        &:active {
+            color: var(--azul);
+        }
+
+        &.selecionado {
+            position: relative;
+            color: var(--azul);
+    
+            &::after {
+                position: absolute;
+                bottom: -0.125rem;
+                left: 0;
+                width: 100%;
+                height: 0.4rem;
+                content: "";
+                background-color: var(--azul);
+                border-radius: 0.5rem;
+            }
+        }
+    }
+
+    
+}

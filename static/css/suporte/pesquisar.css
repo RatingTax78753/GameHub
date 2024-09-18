@@ -1,0 +1,58 @@
+.container {
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.pergunta {
+    width: 80rem;
+    gap: 0.52rem;
+    padding: 0.65rem;
+
+    & .titulo-pergunta {
+        transition: var(--transition-l-02s);
+
+        &.hover {
+            color: var(--azul);
+        }
+
+        & .topico {
+            font-size: 1.6rem;
+            color: var(--azul);
+            vertical-align: middle;
+            border-right: solid 0.2rem var(--azul);
+            padding-right: 0.65rem;
+        }
+    }
+}
+
+.divisoria {
+    content: "";
+    width: 100%;
+    height: 0.2rem;
+    background-color: var(--cinza-claro2);
+    margin: 1.6rem 0;
+}
+
+.conteudo {
+    gap: 0.65rem;
+}
+
+.info {
+    font-size: 1.6rem;
+    color: var(--cinza-claro2);
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+
+    & .autor {
+        gap: 0.52rem;
+        align-items: center;
+
+        & img {
+            object-fit: cover;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+    }
+}

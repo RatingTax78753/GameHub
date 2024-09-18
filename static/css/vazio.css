@@ -1,0 +1,17 @@
+.vazio {
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    background-color: var(--preto);
+    align-items: center;
+    gap: 2rem;
+
+    & a {
+        font-size: 1.92rem;
+        transition: var(--transition-l-01s);
+
+        &:hover {
+            text-decoration: underline;
+            color: var(--azul);
+        }
+    }
+}

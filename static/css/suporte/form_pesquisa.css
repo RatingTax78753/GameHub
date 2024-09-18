@@ -1,0 +1,63 @@
+.pesquisar {
+    height: 52.5rem;
+}
+
+.topo {
+    background-image: linear-gradient(var(--azul), var(--azul-escuro2));
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    & .container {
+        gap: 3.12rem;
+        margin-bottom: 4.88rem;
+
+        & h1 {
+            font-size: 4.78rem;
+        }
+    
+        & input {
+            padding: 0.52rem 1.02rem;
+            width: 55rem;
+            height: 3.6rem;
+            font-size: 1.6rem;
+            border-radius: 2rem;
+            border: solid 0.2rem var(--cinza);
+        }
+
+        & a {
+            position: absolute;
+            bottom: -1rem;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.92rem;
+            font-weight: 500;
+    
+            & img {
+                height: 2.25rem;
+                transform: translateY(-35%);
+            }
+        }
+    }
+}
+
+.voltar-homepage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3rem;
+    height: 3rem;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.92rem;
+
+    & img {
+        width: 100%;
+        height: 100%;
+        transform: rotate(90deg);
+    }
+
+    & p {
+        transform: translate(-10%, 5%);
+    }
+}

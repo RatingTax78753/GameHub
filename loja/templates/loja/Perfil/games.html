@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Games - {{ request.user.username }} &#124; GamesHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'css/games.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vazio.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao">
+        <div class="container flex col">
+            {% include 'loja/Includ/navbar-perfil.html' %}
+
+            {% if produtos|length > 0 %}
+                <div class="grid">
+                    {% for item in produtos %}
+                        <div {% if forloop.counter|divisibleby:4 %} class="chave-produto ultima-col" {% else %} class="chave-produto" {% endif %}>
+                            <div class="produto label flex">
+                                <img class="img-produto" src="{{ item.produto.capa.url }}" alt="Capa do produto: {{ item.produto.nome }}">
+                                <p class="tipo-produto" style="--tipo-cor: {{ item.produto.tipo.codigo_cor }};">{{ item.produto.tipo.nome }}</p>
+                            
+                                <div class="flex div-hover">
+                                    <p>Ver chave de ativação</p>
+                                </div>
+                            </div>
+
+                            <img class="seta-games" src="{% static 'images/seta-games.svg' %}" alt="Seta da caixa da chave de">
+                            <div class="div-chave-ativacao flex col">
+                                <h2>
+                                    {% if item.produto.nome.split|length > 10 %}
+                                        {% for palavra in item.produto.nome.split|slice:":10" %}
+                                            {{ palavra }}{% if forloop.counter == 10 %}...{% endif %}
+                                        {% endfor %}
+
+                                    {% else %}
+                                        {% for palavra in item.produto.nome.split %}
+                                            {{ palavra }}
+                                        {% endfor %}
+                                    {% endif %}
+                                </h2>
+
+                                <div class="ativacao flex col">
+                                    <div class="label-ativacao flex">
+                                        <p>Chave de ativação:</p>
+
+                                        <div class="flex">
+                                            <p>Ativação:</p>
+                                            <a target="_blank" href="{{ item.produto.ativacao.link }}">{{ item.produto.ativacao.nome }}</a>
+                                        </div>
+                                    </div>
+
+                                    <form {% if not item.item_pedido.chave_liberada %}id="formModal"{% endif %} class="flex" action="{% url 'loja:liberar_chave' request.user.username item.item_pedido.id %}" method="POST">
+                                        {% csrf_token %}
+
+                                        {% if item.item_pedido.chave_liberada %}
+                                            <p class="chave liberada">{{ item.chave.chave }}</p>
+                                            <button class="unlock-key" type="submit">
+                                                <img src="{% static 'images/unlock.svg' %}" data-lock-src="{% static 'images/unlock.svg' %}" data-unlock-src="{% static 'images/lock.svg' %}" alt="Img cadeado trancado">
+                                            </button>
+                                        {% else %}
+                                            <p class="chave">Chave de Ativação oculta</p>
+                                            <button id="activateModal" class="unlock-key" type="submit">
+                                                <img src="{% static 'images/lock.svg' %}" data-lock-src="{% static 'images/lock.svg' %}" data-unlock-src="{% static 'images/unlock.svg' %}" alt="Img cadeado trancado">
+                                            </button>
+                                        {% endif %}
+                                    </form>
+                                </div>
+
+                                <div class="flex info-pedido">
+                                    <div class="campo flex col">
+                                        <p>Código de transação:</p>
+                                        <p>{{ item.pedido.codigo_transacao  }}</p>
+                                    </div>
+
+                                    <div class="campo flex col">
+                                        <p>Data da compra:</p>
+                                        <p>{{ item.pedido.data_finalizacao|date:"d/m/Y" }} às {{ item.pedido.data_finalizacao|date:"H:i" }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <div class="vazio flex col">
+                    <h1>Você ainda não possui nenhum jogo em sua conta!</h1>
+                    <a href="{% url 'loja:todos_produtos' %}">Veja nossos produtos</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    {% block modal %}
+        <div id="confirmationModal" class="modal flex">
+            <div class="modal-content flex col">
+                <div class="textos flex col">
+                    <h2>
+                        Você realmente deseja <span>LIBERAR</span> sua chave?
+                    </h2>
+
+                    <p>Após isso, a solicitação de reembolso é impossível!</p>
+                </div>
+
+                <div class="botoes flex">
+                    <button id="confirmButton">Liberar</button>
+                    <button id="cancelButton" class="btn-cancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/games.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
+{% endblock %}

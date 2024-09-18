@@ -1,0 +1,26 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/suporte/form_pesquisa.css' %}">
+
+<section {% if homepage %} class="secao pesquisar topo flex" {% else %} class="secao topo flex" {% endif %}>
+    <div class="container flex col">
+        <h1>Como podemos ajudar?</h1>
+
+        <form method="GET" action="{% url 'suporte:pesquisar_pergunta' %}">
+            <input type="text" name="support_query" value="{{ request.GET.support_query }}" placeholder="Busque a sua pergunta ou palavra chave aqui">
+        </form>
+
+        {% if homepage %}
+            <a href="#topicos" class="flex col">
+                <p>Tópicos</p>
+                <img src="{% static 'images/seta-baixo.svg' %}" alt="Seta para baixo">
+            </a>
+        {% endif %}
+    </div>
+
+    {% if pagina_pesquisa %}
+        <a class="voltar-homepage flex" href="{% url 'suporte:homepage' %}">
+            <img src="{% static 'images/seta-baixo.svg' %}" alt="Seta para baixo">
+            <p>Voltar</p>
+        </a>
+    {% endif %}
+</section>

@@ -1,0 +1,196 @@
+.secao {
+    background-image: url("../images/BG2.jpg");
+    background-color: rgba(0, 0, 0, 0.4);
+    background-blend-mode: overlay;
+    min-height: 90vh;
+
+    & .container {
+        gap: 2rem;
+
+        & .pedido-preco {
+            gap: 3.12rem;
+        
+            & .esquerda {
+                flex: 60;
+            
+                & .itens {
+                    padding: 2rem 2.5rem;
+                    border-radius: 1rem;
+                    background-color: var(--preto);
+                    box-shadow: var(--box-shadow);
+                
+                    & .item {
+                        padding: 2rem 0.52rem;
+                        gap: 1.6rem;
+                        justify-content: space-between;
+                        align-items: start;
+                        border-bottom: solid 0.2rem var(--cinza-escuro1);
+                    
+                        & .img-info {
+                            gap: 0.82rem;
+                    
+                            & img {
+                                width: 20rem;
+                                height: 9.347rem;
+                                overflow: hidden;
+                                object-fit: cover;
+                                border-radius: 0.5rem;
+                                box-shadow: var(--box-shadow);
+                            }
+                    
+                            & .titulo-preco {
+                                justify-content: space-between;
+                                align-items: start;
+                                gap: 1.02rem;
+                                width: 55rem;
+                                font-weight: 700;
+                        
+                                & .preco {
+                                    align-self: end;
+                                }
+                            }
+                        }
+                    
+                        & button {
+                            background-color: transparent;
+                            border: 0;
+                            cursor: pointer;
+                            border-radius: 50%;
+                            padding: 0.33rem;
+                            justify-content: center;
+                            align-items: center;
+                            height: 2.66rem;
+                            width: 2.66rem;
+                        
+                            & img {
+                                height: 100%;
+                                width: 100%;
+                            }
+                        
+                            &:hover {
+                                background-color: var(--vermelho);
+                            }
+                        }
+                    
+                        &:last-child {
+                            border: 0;
+                        }
+                    
+                        &:hover {
+                            background-color: var(--preto-escuro);
+                    
+                            &:first-child {
+                                border-top-left-radius: 0.5rem;
+                                border-top-right-radius: 0.5rem;
+                            }
+                    
+                            &:last-child {
+                                border-bottom-left-radius: 0.5rem;
+                                border-bottom-right-radius: 0.5rem;
+                            }
+                        }
+                    }
+                }
+            }
+        
+            & .direita {
+                gap: 1.33rem;
+                align-items: center;
+                flex: 40;
+            
+                & .preco {
+                    border-radius: 0.5rem;
+                    box-shadow: var(--box-shadow);
+                    background-color: var(--preto);
+                    width: 100%;
+            
+                    & p {
+                        font-size: 1.92rem;
+                        font-weight: 700;
+                
+                        & span{
+                            font-weight: normal;
+                        }
+                    }
+            
+                    & .total {
+                        justify-content: space-between;
+                        align-items: center;
+                        gap: 0.52rem;
+                        padding: 1.02rem;
+                        
+                        &#total {
+                            cursor: pointer;
+
+                            & div {
+                                gap: 0.33rem;
+                                align-items: center;
+                            }
+
+                            & ::selection {
+                                background-color: transparent;
+                            }
+                        }
+            
+                        & img {
+                            border-radius: 50%;
+                            width: 2.5rem;
+                            height: 2.5rem;
+                            transition: all 0.1s linear;
+                            transform: translateY(-5%) rotate(-90deg);
+            
+                            &.ativo {
+                                transform: translateY(-10%) rotate(0deg);
+                                background-color: var(--cinza-escuro1);
+                            }
+                        }
+                    }
+            
+                    & .info-preco {
+                        background-color: var(--preto-escuro2);
+                        padding: 0 1.02rem;
+                        border-bottom-left-radius: 0.5rem;
+                        border-bottom-right-radius: 0.5rem;
+                        gap: 0.52rem;
+                        max-height: 0;
+                        overflow: hidden;
+                        transition: all 0.1s ease-in-out;
+
+                        &.aberto {
+                            padding: 1.02rem;
+                        }
+                
+                        & .comps-preco {
+                            padding-bottom: 0.52rem;
+                            border-bottom: solid 0.2rem var(--cinza-escuro1);
+                
+                            & .comp-preco {
+                                justify-content: space-between;
+                                color: var(--verde-escuro);
+                            }
+                        } 
+                    }
+                }
+
+                & .botao, 
+                & form {
+                    width: 100%;
+
+                    &.continuar-comprando {
+                        background-color: var(--preto);
+
+                        &:hover {
+                            background-color: var(--preto-escuro2);
+                        }
+                    }
+                }
+            }
+        }
+
+        & .vazio {
+            box-shadow: var(--box-shadow);
+        }
+    }
+}
+
+

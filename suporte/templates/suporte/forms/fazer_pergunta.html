@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Fazer Pergunta &#124; Suporte GameHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/suporte/pergunta.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom_select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/suporte/form.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao">
+        <div class="container flex col">
+            <h1>Fazer pergunta:</h1>
+
+            {% if erro %}
+                <div class="erro">
+                    {% if erro == 'preenchimento' %}
+                        <span>Preencha todos os campos</span>
+                    {% elif erro == 'topico' %}
+                        <span>Defina um tópico para a sua pergunta</span>
+                    {% endif %}
+                </div>
+            {% endif %}
+            
+            <form class="flex col" method="POST" action="">
+                {% csrf_token %}
+
+                <div class="custom-select flex">
+                    <div class="display-custom-select flex">
+                        <p class="label">Tópico:</p>
+
+                        <div id="triggerFiltro" class="flex">
+                            <p id="filtroSelecionado"></p>
+                            <img id="imgFiltroSelecionada"  src="{% static 'images/seta-baixo.svg' %}" alt="Seta dropdown">
+                        </div>
+                    </div>
+                
+                    <div id="listFiltros" class="flex col">
+                        {% for topico in topicos %}
+                            <label class="item-filtrar">
+                                <input type="radio" name="topico" value="{{ topico.slug }}">
+                                <p>{{ topico.nome }}</p>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="campo flex col">
+                    <label for="titulo">Título:</label>
+                    <input type="text" name="titulo" id="titulo" placeholder="Título">
+                </div>
+
+                <div class="flex col">
+                    <label for="conteudo">Pergunta:</label>
+                    <textarea name="conteudo" id="conteudo" rows="10" placeholder="Escreva sua pergunta aqui..." ></textarea>
+                </div>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/custom_select.js' %}" ></script>
+    <script src="{% static 'js/suporte/form.js' %}" ></script>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Homepage &#124; Suporte GameHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/suporte/homepage.css' %}">
+{% endblock %}
+
+{% block main %}
+    {% include 'suporte/component/form_pesquisa.html' %}
+
+    <section id="topicos" class="secao">
+        <div class="container flex col">
+            <h2>Tópicos:</h2>
+
+            <div class="grid-topicos flex col">
+                {% for topicos in todos_topicos %}
+                    <div class="topicos flex">
+                        {% for topico in topicos %}
+                            <a class="topico flex col" href="{% url 'suporte:detalhes_topico' topico.slug %}">
+                                {% if topico.simbolo %}
+                                    <img src="{{ topico.simbolo.url }}" alt="Simbolo do topico: {{ topico.nome }}">
+                                {% endif %}
+                                <p>{{ topico.nome }}</p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="secao">
+        <div class="container flex col">
+            <h2>Não conseguiu resolver?</h2>
+            <a class="botao" href="mailto:support@gamehub.com">Entre em contato com a gente!</a>
+        </div>
+    </section>
+
+    <div id="fixed" class="flex col">
+        <div class="flex col">
+            <div id="caixa" class="flex col">
+                <h2>Suporte</h2>
+                
+                <div class="flex col">
+                    <a href="{% url 'suporte:fazer_pergunta' %}">Fazer uma pergunta</a>
+                    <a href="{% url 'suporte:fazer_feedback' %}">Dar feedback</a>
+                </div>
+            </div>
+
+            <img id="seta" src="{% static 'images/seta-info.svg' %}" alt="Seta suporte">
+        </div>
+        
+        <img id="button" class="flex" src="{% static 'images/mais.svg' %}" alt="Simbolo Mais"
+        data-mais-src="{% static 'images/mais.svg' %}" data-mais-alt="Simbolo Mais"
+        data-menos-src="{% static 'images/menos.svg' %}" data-menos-alt="Simbolo Menos">
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/suporte/homepage.js' %}" ></script>
+{% endblock %}

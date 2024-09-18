@@ -1,0 +1,36 @@
+.container {
+    gap: 2.5rem;
+    width: 90rem;
+    justify-content: center;
+
+    & #topo {
+        scroll-margin-top: 12.1rem;
+        margin: 0 auto;
+        font-size: 3.9rem;
+    }
+
+    & .topico {
+        gap: 1.28rem;
+
+        & div {
+            gap: 0.82rem;
+
+            & p {
+                color: var(--cinza-claro1);
+            }
+
+            & strong {
+                color: var(--branco);
+            }
+        }
+
+        & a {
+            width: fit-content;
+            color: var(--azul);
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

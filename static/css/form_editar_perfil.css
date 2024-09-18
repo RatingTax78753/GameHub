@@ -1,0 +1,123 @@
+.secao {
+    justify-content: center;
+    min-height: 52.55rem;
+
+    & .container {
+        align-items: center;
+        gap: 2rem;
+        position: relative;
+    }
+
+    & .perfil {
+        box-shadow: var(--box-shadow-p);
+    }
+
+    & form {
+        justify-content: center;
+        align-items: center;
+        gap: 1.6rem;
+
+        & .foto-perfil {
+            width: 16rem;
+            height: 16rem;
+            overflow: hidden;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+    
+            & img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+    
+            & #divAlterarFotoPerfil {
+                background-color: rgba(0, 0, 0, 0.7);
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                display: none;
+    
+                & p {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: max-content;
+                    color: var(--branco);
+                    transform: translate(-50%, -50%);
+                }
+    
+                &.ativo {
+                    display: block;
+                }
+            }
+
+            & input {
+                display: none;
+            }
+        }
+
+        & label {
+            padding: 0.33rem 0.52rem;
+            color: var(--cinza);
+            font-size: 1.33rem;
+            font-weight: 700;
+        }
+
+        & input {
+            background-color: transparent;
+            border: 0;
+            color: var(--branco);
+            font-weight: 700;
+            font-size: 1.6rem;
+            outline: 0;
+            transition: var(--transition-l-01s);
+            border-bottom: solid 0.1rem var(--cinza-escuro1);
+            padding: 0.33rem 0.52rem;
+
+            &:focus-visible {
+                border-bottom: solid 0.1rem var(--branco);
+            }
+
+            &:is(:-webkit-autofill, :autofill) {
+                -webkit-text-fill-color: var(--branco);
+                border-bottom: solid 0.1rem var(--branco);
+                -webkit-box-shadow: 0 0 0 100rem var(--preto-escuro) inset;
+            }
+
+            &.username {
+                font-size: 2.76rem;
+            }
+        }
+
+        & .button-links {
+            gap: 0.52rem;
+            justify-content: center;
+            align-items: center;
+
+            & .redirect-links {
+                font-size: 1.33rem;
+                gap: 0.33rem;
+    
+                & a:hover {
+                    color: var(--azul);
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+a {
+    transition: var(--transition-l-01s);
+}
+
+.erro {
+    font-size: 1.33rem;
+    font-weight: 700;
+    color: var(--vermelho);
+    position: absolute;
+    top: 7rem;
+}

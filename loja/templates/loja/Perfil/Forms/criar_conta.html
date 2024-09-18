@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Criar conta &#124; GamesHub
+{% endblock %}
+
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao background-img form flex col">
+        <div class="container flex col">
+            <h1>Crie sua conta:</h1>
+
+
+            {% if erro %}
+                <div class="erro">
+                    {% if erro == 'preenchimento' %}
+                        <span>Preencha todos os campos</span>
+                    {% elif erro == 'email_invalido' %}
+                        <span>Email invalido</span>
+                    {% elif erro == 'senhas_diferentes' %}
+                        <span>Senhas diferentes</span>
+                    {% elif erro == 'usuario_existente' %}
+                        <span>Usuario já existe</span>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <div class="form-links flex col">
+                <form class="flex col" action="{% url 'loja:criar_conta' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="flex col todos-campos">
+                        <div class="label-input flex col">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" id="email" placeholder="Email">
+                        </div>
+
+                        <div class="label-input flex col">
+                            <label for="senha">Senha:</label>
+                            <input type="password" name="senha" id="senha" placeholder="Senha">
+                        </div>
+
+                        <div class="label-input flex col">
+                            <label for="confirmacao_senha">Confirmação de Senha:</label>
+                            <input type="password" name="confirmacao_senha" id="confirmacao_senha" placeholder="Confirmação de Senha">
+                        </div>
+                    </div>
+
+                    <button type="submit">Criar Conta</button>
+                </form>
+
+                <div class="redirect-links flex">
+                    <p>Já possui uma conta?</p>
+                    <a href="{% url 'loja:fazer_login' %}">Faça login aqui!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

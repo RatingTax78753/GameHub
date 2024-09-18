@@ -1,0 +1,89 @@
+.pedidos {
+    gap: 2rem;
+
+    & .pedido {
+        border-radius: 0.5rem;
+        padding: 1.6rem 2rem;
+        background-color: var(--preto-escuro);
+        gap: 1.02rem;
+        width: 85rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: var(--box-shadow-p);
+        
+        & .info-pedido {
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            
+            & #setaInfo {
+                border-radius: 50%;
+                width: 2.5rem;
+                height: 2.5rem;
+                transition: var(--transition-l-01s);
+                transform: translateY(1.5%) rotate(-90deg);
+            }
+
+            & .codigo-data {
+                width: 17.87rem;
+            }
+
+            & .pagamento {
+                width: 13.425rem;
+            }
+
+            & .valor {
+                width: 6.222rem;
+            }
+        }
+    
+        & .detalhes-pedido {
+            display: none;
+            gap: 0.52rem;
+    
+            & .produtos {
+                gap: 0.27rem;
+    
+                & .produto {
+                    justify-content: space-between;
+                }
+            }
+        }
+    
+        &.ativo {
+            & .info-pedido {
+                border-bottom: solid 0.2rem var(--cinza-escuro1);
+                padding-bottom: 1.02rem;
+    
+                & #setaInfo{
+                    background-color: var(--cinza-escuro1);
+                    transform: translateY(3%) rotate(0deg);
+                }
+            }
+    
+            & .detalhes-pedido {
+                display: flex;
+            }
+        }
+    
+        & .legenda {
+            font-size: 1.33rem;
+            opacity: 50%;
+            font-weight: 400;
+            justify-content: space-between;
+        }
+    
+        & .status {
+            &.pendente {
+                color: var(--laranja);
+            }
+    
+            &.finalizado {
+                color: var(--verde);
+            }
+        }
+    }
+    
+}
+
+

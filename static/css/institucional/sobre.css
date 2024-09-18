@@ -1,0 +1,130 @@
+main {
+    font-size: 1.92rem;
+
+    & img {
+        width: 16rem;
+        height: 16rem;
+    }
+}
+
+h1 {
+    font-size: 4.78rem;
+    line-height: 1;
+}
+
+h2 {
+    font-size: 3.92rem;
+    line-height: 1;
+}
+
+.grid {
+    grid-template-columns: repeat(2, 51.3rem);
+    grid-auto-rows: auto;
+    column-gap: 1.6rem;
+    row-gap: 2rem;
+
+    & h2 {
+        font-size: 2.76rem;
+    }
+
+    & .grid-item {
+        gap: 2.5rem;
+        justify-content: center;
+
+        & div {
+            gap: 0.65rem;
+        }
+    }
+}
+
+.center {
+    align-items: center;
+    text-align: center;
+    width: 108rem;
+    gap: 1.02rem;
+
+    & h3 {
+        width: 90rem;
+    }
+}
+
+.topo {
+    background-image: linear-gradient(var(--azul), var(--azul-escuro2));
+    position: relative;
+    justify-content: center;
+    
+    & .center {
+        justify-content: center;
+        width: 80rem;
+        min-height: 40rem;
+    }
+
+    & .link-sobre {
+        position: absolute;
+        bottom: -1rem;
+        justify-content: center;
+        align-items: center;
+
+        & img {
+            height: 2.25rem;
+            transform: translateY(-35%);
+        }
+    }
+}
+
+.nossa-missao {
+    background-image: url("../../images/institucional/BG-Missao.jpg");
+}
+
+#sobre {
+    scroll-margin-top: 8.2rem;
+}
+
+.como-funciona-textos {
+    gap: 3.12rem;
+
+    & div {
+        gap: 0.52rem;
+        justify-content: space-between;
+
+        & a {
+            color: var(--azul);
+            width: fit-content;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.como-funciona {
+    gap: 3.9rem;
+    position: relative;
+    margin-bottom: 4.88rem;
+
+    &::before {
+        position: relative;
+        content: "";
+        top: 20.5rem;
+        z-index: -1;
+        height: 0.5rem;
+        width: 100%;
+        background-color: var(--cinza);
+    }
+}
+
+.como-funciona-instrucoes {
+    justify-content: space-around;
+    gap: 2rem;
+
+    & div {
+        align-items: center;
+        justify-content: center;
+        gap: 1.02rem;
+
+        & #conta {
+            scale: 1.2;
+        }
+    }
+}

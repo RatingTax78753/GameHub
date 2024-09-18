@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Pergunta {{ pergunta.id }} &#124; Suporte GameHub
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/suporte/pergunta.css' %}">
+{% endblock %}
+
+{% block main %}
+    <section class="secao">
+        <div class="container flex col">
+            <div class="pergunta flex col">
+                <div class="conteudo-pergunta flex col">
+                    <h1>{{ pergunta.titulo }} <span>{{ pergunta.topico }}</span></h1>
+
+                    <p>{{ pergunta.pergunta }}</p>
+                </div>
+
+                <div class="info flex">
+                    <p>Postado em {{ pergunta.data|date:"d/m/Y" }} às {{ pergunta.data|date:"H:i" }}</p>
+
+                    <div class="autor flex">
+                        <p>Por</p>
+                        <img src="{{ pergunta.autor.cliente.foto_perfil.url }}" alt="">
+                        <p>{{ pergunta.autor.username }}</p>
+                    </div>
+                </div>
+            </div>
+
+            {% if request.user.is_authenticated %}
+                <form method="POST" action="">
+                    {% csrf_token %}
+
+                    <textarea type="text" name="resposta" id="resposta" placeholder="Responder"></textarea>
+
+                    <div class="botoes flex">
+                        <button type="reset">
+                            <p>Cancelar</p>
+                        </button>
+                        
+                        <button class="flex" type="submit">
+                            <img src="{% static 'images/responder.svg' %}" alt="Simbolo enviar">
+                            <p>Enviar</p>
+                        </button>
+                    </div>
+                </form>
+            {% endif %}
+
+            <div class="respostas flex col">
+                {% if pergunta.respostas.all|length > 0 %}
+                    <h2>Respostas:</h2>
+
+                    {% for resposta in pergunta.respostas.all %}
+                        <div class="resposta flex col">
+                            <p>{{ resposta.resposta }}</p>
+
+                            <div class="info flex">
+                                <p>{{ resposta.data|date:"d/m/Y" }} às {{ resposta.data|date:"H:i" }}</p>
+            
+                                <div class="autor flex">
+                                    <p>Por</p>
+                                    <img src="{{ resposta.autor.cliente.foto_perfil.url }}" alt="">
+                                    <p>{{ resposta.autor.username }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="sem-resposta">Esta pergunta ainda não possui nenhuma resposta!</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/suporte/pergunta.js' %}" ></script>
+{% endblock %}

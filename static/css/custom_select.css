@@ -1,0 +1,90 @@
+.custom-select {
+    position: relative;
+    padding: 2.5rem 2rem 0.42rem 0.52rem;
+    justify-content: end;
+
+
+    & .display-custom-select {
+        font-size: 1.33rem;
+        gap: 0.65rem;
+        align-items: center;
+
+        & #triggerOrdens,
+        & #triggerFiltro {
+            align-items: center;
+            cursor: pointer;
+            gap: 0.42rem;
+
+            & #displaySelecionado,
+            & #filtroSelecionado {
+                background-color: transparent;
+                border-radius: 0.5rem;
+                font-size: 1.6rem;
+                cursor: pointer;
+                font-weight: 700;
+            }
+
+            & img {
+                border-radius: 50%;
+                width: 2.5rem;
+                height: 2.5rem;
+                transition: var(--transition-l-01s);
+                transform: translateY(1.5%) rotate(-90deg);
+            }
+
+            & img.ativo{
+                background-color: var(--cinza-escuro1);
+                transform: translateY(3%) rotate(0deg);
+            }
+        }
+
+        & ::selection {
+            background-color: transparent;
+        }
+    }
+
+    & #listOrdens,
+    & #listFiltros {
+        background-color: transparent;
+        position: absolute;
+        top: 5.42rem;
+        right: 2rem;
+        border-radius: 0.5rem;
+        z-index: 99;
+        color: var(--preto-escuro);
+        background-color: var(--branco);
+        font-weight: 700;
+        width: max-content;
+        display: none;
+    
+        & .item-ordenar,
+        & .item-filtrar {
+            display: flex;
+            padding: 0.52rem 1.02rem;
+            border-bottom: solid 0.1rem var(--cinza-claro2);
+            transition: var(--transition-l-01s);
+    
+            &:last-child {
+                border: 0;
+            }
+    
+            &:hover {
+                background-color: var(--cinza-claro1);
+    
+                &:first-child {
+                    border-top-left-radius: 0.5rem;
+                    border-top-right-radius: 0.5rem;
+                }
+    
+                &:last-child {
+                    border-bottom-left-radius: 0.5rem;
+                    border-bottom-right-radius: 0.5rem;
+                }
+            }
+        }
+
+        &.aberto {
+            display: flex;
+        }
+    }
+}

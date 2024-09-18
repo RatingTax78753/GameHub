@@ -1,0 +1,96 @@
+.produtos {
+    gap: 1.6rem;
+    width: 86.1rem;
+
+    & .produto {
+        padding: 2rem 1.6rem 2rem 1.02rem;
+        gap: 1.02rem;
+        background-color: var(--preto-escuro);
+        border-radius: 0.5rem;
+        box-shadow: var(--box-shadow-p);
+    
+        & .form-img {
+            align-items: center;
+            gap: 1.02rem;
+    
+            & .capa {
+                width: 21rem;
+                height: 11.8rem;
+                overflow: hidden;
+                object-fit: cover;
+                border-radius: 0.5rem;
+                box-shadow: var(--box-shadow);
+            }
+        }
+    
+        & .info-form {
+            width: 100%;
+            gap: 1.02rem;
+            justify-content: space-between;
+            padding: 1.02rem 0.52rem;
+    
+            & .titulo-preco {
+                justify-content: space-between;
+                align-items: center;
+                gap: 0.52rem;
+                font-weight: 700;
+
+                & .titulo {
+                    font-size: 2.76rem;
+                    line-height: 1.1;
+                    max-width: 28.9rem;
+                }
+            }
+    
+            & form {
+                justify-content: end;
+            }
+        }
+    
+        & .button-lista-desejos {
+            background-color: transparent;
+            padding: 0.33rem;
+            justify-content: center;
+            align-items: center;
+            gap: 0.65rem;
+            
+            & img {
+                transform: translateY(7.5%);
+            }
+        
+            &:hover {
+                background-color: transparent;
+            }
+        }
+
+        & .button-carrinho {
+            padding: 0.52rem 0.65rem;
+            justify-content: center;
+            align-items: center;
+            gap: 0.65rem;
+            justify-content: center;
+            align-items: center;
+
+            &.adicionar {
+                background-color: var(--verde);
+
+                &:hover {
+                    background-color: var(--verde-escuro);
+                }
+            }
+
+            &.remover {
+                background-color: var(--vermelho);
+
+                &:hover {
+                    background-color: var(--vermelho-escuro);
+                }
+            }
+        }
+    }
+}
+
+button img {
+    width: 2.5rem;
+    height: 2.5rem;
+}

@@ -1,0 +1,107 @@
+{% load static %}
+
+<nav class="flex">
+    <div class="flex esquerda-navbar">
+        <a class="logo-nome flex" href="{% url 'loja:homepage' %}">
+            <img src="{% static 'images/Logo.svg' %}" alt="Logo do site">
+            <p>Game<span>Hub</span></p>
+        </a>
+
+        <ul class="flex dropdowns">
+            <li class="dropdown item-navbar padding-navbar flex col">
+                <p>Explorar</p>
+                <ul class="lista-dropdown flex col">
+                    <a href="{% url 'loja:todos_produtos' %}">
+                        <li>Todos os produtos</li>
+                    </a>
+                    <a href="{% url 'loja:todas_categorias' %}">
+                        <li>Todos as categorias</li>
+                    </a>
+                    <a href="{% url 'loja:mais_populares' %}">
+                        <li>Mais Populares</li>
+                    </a>
+            
+                    <a href="{% url 'loja:lancamentos' %}">
+                        <li>Lançamentos</li>
+                    </a>
+                    <a href="{% url 'loja:gratuito' %}">
+                        <li>Gratuitos</li>
+                    </a>
+                </ul>
+            </li>
+
+            <li class="dropdown item-navbar padding-navbar flex col">
+                <p>Plataformas</p>
+                <ul class="plataformas lista-dropdown flex col">
+                    {% for plataforma in plataformas_navbar %}
+                        <a style="--plataforma-cor: {{ plataforma.codigo_cor }};" href="{% url 'loja:produtos_por_plataformas' plataforma.slug %}">
+                            <li>{{ plataforma.nome }}</li>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </li>
+
+            <li class="dropdown item-navbar padding-navbar flex col">
+                <img class="tres-pontos" src="{% static 'images/tres-pontos-navbar.svg' %}" alt="Simbolo tres pontos">
+
+                <ul class="lista-dropdown flex col">
+                    <a href="{% url 'suporte:homepage' %}">Suporte</a>
+                    <a href="{% url 'suporte:homepage' %}">Sobre</a>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="direita-navbar flex">
+        <form class="padding-navbar" method="GET" action="{% url 'loja:pesquisar' %}">
+            <input type="text" name="query" value="{{ request.GET.query }}" placeholder="Pesquisar...">
+        </form>
+
+        <div class="carrinho-perfil flex">
+            {% if request.user.is_authenticated %}
+                <a class="carrinho padding-navbar flex" href="{% url 'loja:carrinho' %}">
+                    <img src="{% static 'images/Carrinho.svg' %}" alt="Símbolo carrinho">
+                    <p>{{ qnt_produtos_carrinho }}</p>
+                </a>
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+                <div class="dropdown item-navbar flex col">
+                    <a class="perfil-navbar flex" href="{% url 'loja:perfil' request.user.username %}">
+                        {% if request.user.cliente.foto_perfil %}
+                            <img src="{{ request.user.cliente.foto_perfil.url }}" alt="Foto de perfil">
+                        {% else %}
+                            <img src="{% static 'images/perfil-default.jpg' %}" alt="Foto de perfil default">
+                        {% endif %}
+                    </a>
+
+                    <ul class="lista-dropdown flex col">
+                        <a href="{% url 'loja:perfil' request.user.username %}">
+                            <li>Perfil</li>
+                        </a>
+
+                        <a href="{% url 'loja:lista_desejos' request.user.username %}">
+                            <li>Lista de desejos</li>
+                        </a>
+
+                        <a href="{% url 'loja:pedidos' request.user.username %}">
+                            <li>Meus pedidos</li>
+                        </a>
+
+                        <a href="{% url 'loja:games' request.user.username %}">
+                            <li>Meus Games</li>
+                        </a>
+                    
+                        <a href="{% url 'loja:fazer_logout' %}">
+                            <li>Sair</li>
+                        </a>
+                    </ul>
+                </div>
+            {% else %}
+                <a class="entrar item-navbar flex" href="{% url 'loja:fazer_login' %}">
+                    <p>Entrar</p>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
