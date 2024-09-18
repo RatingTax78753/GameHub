@@ -16,7 +16,7 @@ GameHub é uma plataforma de e-commerce de jogos inspirada em serviços como Ste
 
 ## Funcionalidades:
 
-- Catálogo de jogos com filtragem por categorias, desenvolvedoras e plataformas.
+- Catálogo de jogos com filtragem por categorias, desenvolvedoras, plataformas, sistemas, preço, tipo e ativação.
 - Carrinho de compras e lista de desejos para gerenciar jogos antes de finalizar a compra.
 - Integração com a API do Mercado Pago para pagamentos.
 - Barra de navegação com dropdowns para filtro dinâmico do catálogo.
@@ -47,13 +47,12 @@ GameHub é uma plataforma de e-commerce de jogos inspirada em serviços como Ste
 - Destaque de 4 jogos aleatórios na seção principal da homepage.
 
 ### 2. Navbar:
-- Barra de navegação com dropdowns que filtram jogos por categoria, desenvolvedora ou plataforma.
+- Barra de navegação com dropdowns que redirecionam o usuário para o catálogo já filtrado.
 - Barra de pesquisa para localizar jogos pelo nome inserido pelo usuário.
 - Links de login, criação de conta e carrinho de compras.
 
 ### 3. Página de Catálogo:
-- Exibição dos jogos do site.
-- Exibição de jogos em uma grid.
+- Exibição dos jogos do site em uma grid.
 - Opção de como ordenar os jogos (Adicionados Recentemente, Mais Vendidos, Maior Preço, Menor Preço e Lançamentos).
 - Aba para fazer uma filtragem nos jogos de acordo com seu preço, categoria, plataforma, tipo, sistema e ativação.
 
