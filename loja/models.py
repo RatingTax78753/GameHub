@@ -4,33 +4,6 @@ import os
 import django
 
 # Create your models here.
-
-CATEGORIAS_PADRAO = (
-    ("Ação", "acao", "#8b0000", "Padrao/Categorias/acao.png"),
-    ("Anime", "anime", "#008b8b", "Padrao/Categorias/anime.png"),
-    ("Aventura", "aventura", "#20b2aa", "Padrao/Categorias/aventura.png"),
-    ("Casual", "casual", "#ffa500", "Padrao/Categorias/casual.png"),
-    ("Corrida", "corrida", "#ff4500", "Padrao/Categorias/corrida.png"),
-    ("Esporte", "esporte", "#008000", "Padrao/Categorias/esporte.png"),
-    ("Estratégia", "estrategia", "#800080", "Padrao/Categorias/estrategia.png"),
-    ("Luta", "luta", "#800000", "Padrao/Categorias/luta.png"),
-    ("Mundo Aberto", "mundo-aberto", "#4682b4", "Padrao/Categorias/mundo-aberto.png"),
-    ("Puzzle", "puzzle", "#ff69b4", "Padrao/Categorias/puzzle.png"),
-    ("RPG", "rpg", "#800080", "Padrao/Categorias/rpg.png"),
-    ("Sci-Fi", "sci-fi", "#00ffff", "Padrao/Categorias/sci-fi.png"),
-    ("Simulação", "simulacao", "#ff7f50", "Padrao/Categorias/simulacao.png"),
-    ("Sobrevivência", "sobrevivencia", "#db9c00", "Padrao/Categorias/sobrevivencia.png"),
-    ("Terror", "terror", "#800080", "Padrao/Categorias/terror.png"),
-    ("Visual Novel", "visual-novel", "#ff1493", "Padrao/Categorias/visual-novel.png")
-)
-
-PLATAFORAMAS_PADRAO = (
-    ("Xbox", "xbox", "#107c10", "Padrao/Plataformas/xbox.png"),
-    ("PlayStation", "playstation", "#003791", "Padrao/Plataformas/ps.png"),
-    ("PC", "pc", "#000000", "Padrao/Plataformas/pc.png"),
-    ("Nintendo", "nintendo", "#e60012", "Padrao/Plataformas/nintendo.png"),
-)
-
 CLASSIFICACOES = (
     ("Livre", "Livre"),
     ("10 Anos", "10 Anos"),
@@ -160,7 +133,7 @@ class Produto(models.Model):
     ativo = models.BooleanField(default=True)
     tipo = models.ForeignKey(TipoProduto, on_delete=models.CASCADE)
     franquia = models.ForeignKey(Franquia, null=True, blank=True, on_delete=models.CASCADE)
-    capa = models.ImageField(upload_to="Loja/Produtos/Capa")
+    capa = models.ImageField(upload_to="Loja/Produtos")
     trailer = models.CharField(max_length=500)
     nome = models.CharField(max_length=200)
     slug = models.CharField(max_length=200)

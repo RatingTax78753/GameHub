@@ -8,25 +8,11 @@ import django.utils
 from .api_mercadopago import *
 from .models import *
 from .utils import *
+from .automatic import *
 
 # Create your views here.
 def homepage(request):
-    for categoria in CATEGORIAS_PADRAO:
-        nome = categoria[0]
-        slug = categoria[1]
-        cor = categoria[2]
-        imagem = categoria[3]
-        if not Categoria.objects.filter(slug=slug).exists():
-            Categoria.objects.create(nome=nome, slug=slug, codigo_cor= cor, imagem=imagem)
-
-    for plataforma in PLATAFORAMAS_PADRAO:
-        nome = plataforma[0]
-        slug = plataforma[1]
-        cor = plataforma[2]
-        imagem = plataforma[3]
-        if not Plataforma.objects.filter(slug=slug).exists():
-            Plataforma.objects.create(nome=nome, slug=slug, codigo_cor= cor, imagem=imagem)
-
+    automatic_define(request)
 
     produtos_slider = Produto.objects.filter(ativo=True, estoque_produto__quantidade__gte=0).order_by('?')[:4]
     
