@@ -133,7 +133,7 @@ class Produto(models.Model):
     ativo = models.BooleanField(default=True)
     tipo = models.ForeignKey(TipoProduto, on_delete=models.CASCADE)
     franquia = models.ForeignKey(Franquia, null=True, blank=True, on_delete=models.CASCADE)
-    capa = models.ImageField(upload_to="Loja/Produtos")
+    capa = models.ImageField(upload_to="Loja/Produtos/")
     trailer = models.CharField(max_length=500)
     nome = models.CharField(max_length=200)
     slug = models.CharField(max_length=200)

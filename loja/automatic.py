@@ -1,4 +1,5 @@
 from .models import *
+from institucional.models import RedesSociais
 
 ATIVACOES_PADRAO = (
     ("Steam", "Steam", "https://store.steampowered.com/login/?redir=account%2Fregisterkey%3Fkey%3DWRREZ-4XWX5-FMGBX&redir_ssl=1"),
@@ -94,6 +95,14 @@ TIPOSJOGO_PADRAO = (
     ("Pré Venda", "Pre-Venda", "#0099cc"),
 )
 
+REDESSOCIAIS_PADRAO = (
+    ("Threads",	"https://www.threads.net/?hl=pt-br"),
+    ("Discord",	"https://discord.com/channels/@me"),
+    ("Instagram",	"https://www.instagram.com/"),
+    ("Youtube",	"https://www.youtube.com/"),
+    ("Twitch", "https://www.twitch.tv/")
+)
+
 def automatic_define(request):
     for ativacao in ATIVACOES_PADRAO:
         nome = ativacao[0]
@@ -156,3 +165,9 @@ def automatic_define(request):
         codigo_cor = tipo[2]
         if not TipoProduto.objects.filter(slug=slug).exists():
             TipoProduto.objects.create(nome=nome, slug=slug, codigo_cor=codigo_cor)
+
+    for rede in REDESSOCIAIS_PADRAO:
+        nome = rede[0]
+        link = rede[1]
+        if not RedesSociais.objects.filter(nome=nome).exists():
+            RedesSociais.objects.create(nome=nome, link=link)

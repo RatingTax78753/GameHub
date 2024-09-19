@@ -12,15 +12,10 @@ NOTAS = (
     ("5", "5"),
 )
 
-TIPO = (
-    ("Termo de Uso", "Termo de Uso"),
-    ("Política de Privacidade", "Política de Privacidade"),
-)
-
 class Topico(models.Model):
     nome = models.CharField(max_length=200, default="")
     slug = models.CharField(max_length=200, default="")
-    simbolo = models.ImageField(upload_to="Suporte/Topico", null=True, blank=True)
+    simbolo = models.ImageField(upload_to="Suporte/Topico/", null=True, blank=True)
 
     class Meta:
         ordering = ['slug']
@@ -71,16 +66,3 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f"Nota: {self.nota} | {self.autor}"
-    
-
-class TermoDeUsoEPrivacidade(models.Model):
-    tipo = models.CharField(max_length=100, choices=TIPO)
-    posicao = models.IntegerField(default=1)
-    titulo = models.CharField(max_length=5000, null=True, blank=True)
-    conteudo = models.TextField(default="")
-
-    class Meta:
-        ordering = ['tipo', 'posicao', 'titulo']
-
-    def __str__(self):
-        return f"{self.tipo} | {self.posicao} {self.titulo}"
